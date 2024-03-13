@@ -21,6 +21,7 @@ langchain-community = "^0.0.24"
 tiktoken = "^0.6.0"
 faiss-cpu = "^1.7.4"
 langchain-openai = "^0.0.8"
+streamlit-chat = "^0.1.1"
 
 [tool.poetry.group.dev.dependencies]
 streamlit = "^1.31.1"

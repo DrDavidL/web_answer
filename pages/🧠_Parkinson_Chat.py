@@ -2,13 +2,17 @@ import streamlit as st
 # from langchain.vectorstores import FAISS
 from langchain_community.vectorstores import FAISS
 # from langchain.llms import OpenAI
-from langchain.chat_models import ChatOpenAI
+# from langchain.chat_models import ChatOpenAI
+# from langchain_community.chat_models import ChatOpenAI
+from langchain_openai import ChatOpenAI
 # from langchain.chains import VectorDBQA
 from langchain.chains import RetrievalQA
 # from langchain.embeddings import OpenAIEmbeddings
-from langchain_community.embeddings import OpenAIEmbeddings
+# from langchain_community.embeddings import OpenAIEmbeddings
+from langchain_openai import OpenAIEmbeddings
 from prompts import rag_prompt, references_used
-from langchain.callbacks.streamlit import StreamlitCallbackHandler
+from langchain.callbacks.streamlit import StreamlitCallbackHandler, LLMThoughtLabeler
+from streamlit_chat import message
 
 st.set_page_config(page_title='Neurology Chats', layout = 'centered', page_icon = "💬", initial_sidebar_state = 'auto')    
 
@@ -57,7 +61,7 @@ with st.expander("ℹ️ About this App and Settings"):
 # Get user input
 
 if st.secrets["use_docker"] == "True" or check_password2():
-    st_callback = StreamlitCallbackHandler(st.container())
+    # st_callback = StreamlitCallbackHandler(st.container())
     with st.spinner("Preparing Databases..."):
         llm = ChatOpenAI(openai_api_key=st.secrets['OPENAI_API_KEY'], 
                          model_name =model, 
@@ -73,7 +77,8 @@ if st.secrets["use_docker"] == "True" or check_password2():
     # llm = OpenAI(temperature=0)
 
     # Create the question-answering chain
-    qa_chain = RetrievalQA.from_chain_type(llm=llm, retriever=vectorstore.as_retriever(), chain_type="stuff", callbacks=[st_callback],)
+    
+    qa_chain = RetrievalQA.from_chain_type(llm=llm, retriever=vectorstore.as_retriever(), chain_type="stuff")
 
     user_role = st.radio("What is your role?", ["Patient", "Neurologist", "Other"], horizontal=True)
     if user_role == "Other":
@@ -82,10 +87,24 @@ if st.secrets["use_docker"] == "True" or check_password2():
     query = st.text_input("Ask a question about Parkinson's Disease:")
 
     final_query = f'{rag_prompt} As a {user_role}, so please use appropriate terms, {query}.'
+    
+    llm_thought_labeler = LLMThoughtLabeler()
 
     # If the user enters a query, get the answer
     if query:
-        with st.spinner("Fomulating Answer..."):
-
-            st.write(qa_chain(final_query)["result"])
+        
+        with st.spinner("Fomulating Answer..."):            
+            # qa_chain(final_query, callbacks=[st_callback])["result"]
+            st_callback = StreamlitCallbackHandler(st.container(), thought_labeler=llm_thought_labeler)
+            answer = qa_chain(final_query, callbacks=[st_callback])
             # st.write(answer["result"])
+    
+    # # if query:
+    #     with st.spinner("Formulating Answer..."):
+    #        response_container = st.empty()
+    #        full_response = ""
+    #        for response in qa_chain(final_query):
+    #            full_response += response
+    #            response_container.markdown(full_response)
+
+    #     message(full_response, key="generated_response")
