@@ -12,7 +12,7 @@ from langchain.chains import RetrievalQA
 from langchain_openai import OpenAIEmbeddings
 from prompts import rag_prompt, references_used
 from langchain.callbacks.streamlit import StreamlitCallbackHandler, LLMThoughtLabeler
-from streamlit_chat import message
+# from streamlit_chat import message
 
 st.set_page_config(page_title='Neurology Chats', layout = 'centered', page_icon = "💬", initial_sidebar_state = 'auto')    
 
