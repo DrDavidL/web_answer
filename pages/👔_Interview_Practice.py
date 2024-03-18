@@ -202,7 +202,7 @@ if "last_response_interview" not in st.session_state:
 if check_password2():
     st.info("Have fun. Enter responses at the bottom of the page or choose the Microphone option. This tool uses openai's GPT3.5 turbo 16k model.")
     system_context = st.radio("Select an interviewer type :", ("Tough", "Nice",), horizontal = True, index=0)
-    specialty = st.text_input("Enter your specialty", placeholder="e.g. Stroke Neurology")
+    specialty = st.text_input("Enter your sought specialty area", placeholder="e.g. Stroke Neurology")
     position = st.text_input("Enter your sought position", placeholder="e.g. resident, faculty, administrator")
     
     
