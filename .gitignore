@@ -29,6 +29,8 @@ __pycache__/
 .vs/
 secrets.toml
 .aider*
+*.pyc
 
 last_interviewer.mp3
 last_interviewer.mp3
+__pycache__/functions.cpython-311.pyc
