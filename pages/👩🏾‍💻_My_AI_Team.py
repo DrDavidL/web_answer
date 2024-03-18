@@ -84,7 +84,7 @@ def realtime_search(query, domains, max):
     querystring = {"q": full_query, "limit": max}
 
     headers = {
-        "X-RapidAPI-Key": config["X_RapidAPI_Key"],
+        "X-RapidAPI-Key": st.secrets["X_RapidAPI_Key"],
         "X-RapidAPI-Host": "real-time-web-search.p.rapidapi.com",
     }
 
@@ -92,6 +92,7 @@ def realtime_search(query, domains, max):
     snippets = []
 
     try:
+        # st.write(f"Preparing query... query {querystring} headers {headers}")
         response = requests.get(url, headers=headers, params=querystring)
         
         # Check if the request was successful
