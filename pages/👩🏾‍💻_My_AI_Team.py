@@ -378,8 +378,7 @@ def scrapeninja(url_list, max):
 @st.cache_data
 def reconcile(question, model, old, new, web_content, reconcile_prompt):
     # Send a message to the model asking it to summarize the text
-    openai.api_base = "https://api.openai.com/v1/"
-    openai.api_key = config['OPENAI_API_KEY']
+    client = OpenAI(api_key=st.secrets["OPENAI_API_KEY"])
     # truncated_web_content = truncate_after_n_words(web_content, 10000)
     try:
         response = client.chat.completions.create(
