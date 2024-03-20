@@ -76,7 +76,7 @@ def check_password2():
         # Password correct.
         return True
 
-st.title("Prior Authorization Help ✔")
+st.title("✔ Prior Authorization Help")
 st.write("This is for educational purposes only, please do not input real patient information or use in clinical practice.")
 
 if check_password2() or st.secrets["use_docker"] == "True":
