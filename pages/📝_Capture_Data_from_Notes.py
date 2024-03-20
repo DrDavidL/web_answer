@@ -165,8 +165,8 @@ def answer_using_prefix(prefix, sample_question, sample_answer, my_ask, temperat
     # # st.write(history_context + prefix + my_ask)
     # # st.write(full_answer)
     #     st.session_state.copied_note = full_answer
-    sample_note = completion.choices[0].message.content
-    return  st.write(sample_note) # Change how you access the message content
+    st.session_state.copied_note = completion.choices[0].message.content
+    st.write(st.session_state.copied_note) # Display the generated note
 
 def check_password():
     """Returns `True` if the user had the correct password."""
