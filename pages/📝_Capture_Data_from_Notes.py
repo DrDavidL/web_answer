@@ -50,33 +50,33 @@ class NeurologicDiagnosis(BaseModel):
 #     return cancer_details
 
 def old_method3(string, model="gpt-3.5-turbo", output = "json") -> NeurologicDiagnosis:
-     client = OpenAI(api_key = st.secrets["OPENAI_API_KEY"])
-     client = instructor.patch(OpenAI())
-     response=  client.chat.completions.create(
-        model=model,
-        response_model=NeurologicDiagnosis,
-        messages=[
-            {
-                "role": "user",
-                "content": f"Get user details for {string}",
-            },
-        ],
+    client = OpenAI(api_key = st.secrets["OPENAI_API_KEY"])
+    client = instructor.patch(OpenAI())
+    response=  client.chat.completions.create(
+      model=model,
+      response_model=NeurologicDiagnosis,
+      messages=[
+          {
+              "role": "user",
+              "content": f"Get user details for {string}",
+          },
+      ],
     )  # type: ignore
     return json.dumps(response.dict(), indent=2)
   
   
 def method3(string, model="gpt-3.5-turbo", output = "json") -> NeurologicDiagnosis:
-     client = OpenAI(api_key = st.secrets["OPENAI_API_KEY"])
-     response=  client.chat.completions.create(
-        model=model,
-        messages=[
-            ({"role": "system", "content": system_prompt}),
-            {
-                "role": "user",
-                "content": f"Here is the note: {string}",
-            },
-        ],
-    )  # type: ignore
+    client = OpenAI(api_key = st.secrets["OPENAI_API_KEY"])
+    response=  client.chat.completions.create(
+      model=model,
+      messages=[
+          ({"role": "system", "content": system_prompt}),
+          {
+              "role": "user",
+              "content": f"Here is the note: {string}",
+          },
+      ],
+  )  # type: ignore
     return json.dumps(response.dict(), indent=2)
     
 if "openai_api_key" not in st.session_state:
@@ -90,8 +90,8 @@ def is_valid_api_key(api_key):
 
     try:
          # Send a test request to the OpenAI API
-         response = openai.Completion.create(model="text-davinci-003",
-                    prompt="Hello world")['choices'][0]['text']
+        response = openai.Completion.create(model="text-davinci-003",
+                  prompt="Hello world")['choices'][0]['text']
         return True
     except Exception:
         pass
@@ -109,8 +109,7 @@ def fetch_api_key():
          os.environ['OPENAI_API_KEY'] = api_key
     except KeyError:
 
-        if st.session_state.openai_api_key != '':
-        
+
         if st.session_state.openai_api_key != '':
             api_key = st.session_state.openai_api_key
             os.environ['OPENAI_API_KEY'] = api_key
