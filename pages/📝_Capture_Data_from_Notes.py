@@ -501,8 +501,8 @@ if st.secrets["use_docker"] == "True" or check_password():
     
     if test_or_use == "Generate a note":
       
-      cancer_diagnosis = st.text_input("Enter a neurologic diagnosis and any other details", placeholder = "e.g., 45F with multiple sclerosis", key = 'neurology_diagnosis',)
-      sample_prompt = f"Generate a comprehensive neurologist progress note for a patient as follows: {neurology_note}."
+      neurology_diagnosis = st.text_input("Enter a neurologic diagnosis and any other details", placeholder = "e.g., 45F with multiple sclerosis", key = 'neurology_diagnosis',)
+      sample_prompt = f"{neurology_note} and here is the neurology diagnosis: {neurology_diagnosis}"
       if st.button("Generate a sample note"):
         prelim_note = answer_using_prefix(prefix, sample_prompt, sample_response, sample_prompt, temperature = 0.4, history_context = "", )
         st.session_state.copied_note = prelim_note
