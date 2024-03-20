@@ -203,7 +203,7 @@ if "last_response_interview" not in st.session_state:
 
 if check_password2() or st.secrets["use_docker"] == "True":
     st.warning("""Imagine you're interviewing for a job. This may be clinical or business within your field. Enter responses at the bottom 
-               of the page or choose the Microphone option (your Chrome tab should be unmuted and allow microphone access). This tool uses openai's GPT3.5 turbo 16k model.
+               of the page or choose the Microphone option (your Chrome tab should be unmuted and allow microphone access). This tool uses OpenAI's GPT3.5 turbo model.
                Development is underway for clinical scenarios. :) """)
     system_context = st.radio("Select an interviewer type :", ("Tough", "Nice",), horizontal = True, index=0)
     specialty = st.text_input("Enter your sought specialty area", placeholder="e.g. Stroke Neurology")
