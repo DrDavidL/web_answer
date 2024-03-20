@@ -50,9 +50,9 @@ class NeurologicDiagnosis(BaseModel):
 #     return cancer_details
 
 def old_method3(string, model="gpt-3.5-turbo", output = "json") -> NeurologicDiagnosis:
-    client = OpenAI(api_key = st.secrets["OPENAI_API_KEY"])
-    client = instructor.patch(OpenAI())
-    response=  client.chat.completions.create(
+     client = OpenAI(api_key = st.secrets["OPENAI_API_KEY"])
+     client = instructor.patch(OpenAI())
+     response=  client.chat.completions.create(
         model=model,
         response_model=NeurologicDiagnosis,
         messages=[
@@ -66,8 +66,8 @@ def old_method3(string, model="gpt-3.5-turbo", output = "json") -> NeurologicDia
   
   
 def method3(string, model="gpt-3.5-turbo", output = "json") -> NeurologicDiagnosis:
-    client = OpenAI(api_key = st.secrets["OPENAI_API_KEY"])
-    response=  client.chat.completions.create(
+     client = OpenAI(api_key = st.secrets["OPENAI_API_KEY"])
+     response=  client.chat.completions.create(
         model=model,
         messages=[
             ({"role": "system", "content": system_prompt}),
@@ -89,8 +89,8 @@ def is_valid_api_key(api_key):
     openai.api_key = api_key
 
     try:
-        # Send a test request to the OpenAI API
-        response = openai.Completion.create(model="text-davinci-003",                     
+         # Send a test request to the OpenAI API
+         response = openai.Completion.create(model="text-davinci-003",
                     prompt="Hello world")['choices'][0]['text']
         return True
     except Exception:
@@ -100,15 +100,16 @@ def is_valid_api_key(api_key):
 
 def fetch_api_key():
     api_key = None
+
     
     try:
-        # Attempt to retrieve the API key as a secret
-        api_key = st.secrets["OPENAI_API_KEY"]
-        # os.environ["OPENAI_API_KEY"] = api_key
-        st.session_state.openai_api_key = api_key
-        os.environ['OPENAI_API_KEY'] = api_key
-        # st.write(f'Here is what we think the key is step 1: {api_key}')
+         # Attempt to retrieve the API key as a secret
+         api_key = st.secrets["OPENAI_API_KEY"]
+         st.session_state.openai_api_key = api_key
+         os.environ['OPENAI_API_KEY'] = api_key
     except KeyError:
+
+        if st.session_state.openai_api_key != '':
         
         if st.session_state.openai_api_key != '':
             api_key = st.session_state.openai_api_key
@@ -172,12 +173,12 @@ def check_password():
     """Returns `True` if the user had the correct password."""
 
     def password_entered():
-        """Checks whether a password entered by the user is correct."""
-        if st.session_state["password"] == st.secrets["password"]:
-            st.session_state["password_correct"] = True
-            del st.session_state["password"]  # don't store password
-        else:
-            st.session_state["password_correct"] = False
+         """Checks whether a password entered by the user is correct."""
+         if st.session_state["password"] == st.secrets["password"]:
+             st.session_state["password_correct"] = True
+             del st.session_state["password"]  # don't store password
+         else:
+             st.session_state["password_correct"] = False
 
     if "password_correct" not in st.session_state:
         # First run, show input for password.
@@ -386,13 +387,14 @@ schema3 = {
 if st.secrets["use_docker"] == "True" or check_password():
 
     if 'history' not in st.session_state:
-                st.session_state.history = []
+         st.session_state.history = []
 
     if 'output_history' not in st.session_state:
-                st.session_state.output_history = []
+         st.session_state.output_history = []
+
                 
     if 'mcq_history' not in st.session_state:
-                st.session_state.mcq_history = []
+         st.session_state.mcq_history = []
 
     # API_O = st.secrets["OPENAI_API_KEY"]
     # Define Streamlit app layout
