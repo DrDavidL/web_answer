@@ -421,7 +421,7 @@ if st.secrets["use_docker"] == "True" or check_password():
 
     st.set_page_config(page_title='Neurology Parser Assistant', layout = 'centered', page_icon = ':stethoscope:', initial_sidebar_state = 'auto')
     st.title("📝 Neurology Parser Assistant")
-    st.warning("""Who likes EHR click? What if AI could recognize all concepts and file them where they belong in the chart? This tool illustrates
+    st.warning("""Who likes extra EHR clicks? What if AI could recognize all concepts and file them where they belong in the chart? This tool illustrates
                progress in that direction with a variety of methods. Soon, one or more will meet muster for research or clinical use!""")
     disclaimer = """**Disclaimer:** This is a tool to assist chart abstraction for cancer related diagnoses. \n 
 2. This tool is not a real doctor. \n    
