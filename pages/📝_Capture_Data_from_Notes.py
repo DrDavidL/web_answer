@@ -77,7 +77,8 @@ def method3(string, model="gpt-3.5-turbo", output = "json") -> NeurologicDiagnos
           },
       ],
   )  # type: ignore
-    return json.dumps(response.dict(), indent=2)
+    # return json.dumps(response.dict(), indent=2)
+    return response.choices[0].message.content
     
 if "openai_api_key" not in st.session_state:
     st.session_state.openai_api_key = ''
@@ -165,8 +166,8 @@ def answer_using_prefix(prefix, sample_question, sample_answer, my_ask, temperat
     # # st.write(history_context + prefix + my_ask)
     # # st.write(full_answer)
     #     st.session_state.copied_note = full_answer
-    st.session_state.copied_note = completion.choices[0].message.content
-    st.write(st.session_state.copied_note) # Display the generated note
+    return completion.choices[0].message.content
+    # st.write(gen_note) # Display the generated note
 
 def check_password():
     """Returns `True` if the user had the correct password."""
@@ -501,10 +502,11 @@ if st.secrets["use_docker"] == "True" or check_password():
     if test_or_use == "Generate a note":
       
       cancer_diagnosis = st.text_input("Enter a neurologic diagnosis and any other details", placeholder = "e.g., 45F with multiple sclerosis", key = 'neurology_diagnosis',)
-      sample_prompt = f"Generate a comprehensive neurologist progress note for a patient as follows: {cancer_diagnosis}."
+      sample_prompt = f"Generate a comprehensive neurologist progress note for a patient as follows: {neurology_note}."
       if st.button("Generate a sample note"):
         prelim_note = answer_using_prefix(prefix, sample_prompt, sample_response, sample_prompt, temperature = 0.4, history_context = "", )
         st.session_state.copied_note = prelim_note
+        st.write(st.session_state.copied_note)
   
     elif test_or_use == "Paste content":
       prelim_note = st.text_area("Paste your note here", height=600)
