@@ -227,9 +227,9 @@ if st.secrets["use_docker"] == "True" or check_password():
     # API_O = st.secrets["OPENAI_API_KEY"]
     # Define Streamlit app layout
 
-    st.set_page_config(page_title='Bias Checker', layout = 'centered', page_icon = ':disappointed:', initial_sidebar_state = 'auto')
-    st.title("Bias Checker - EARLY DRAFT VERSION")
-    st.write("ALPHA version 0.2")
+    st.set_page_config(page_title='Bias Checker', layout = 'centered', page_icon = '⚖️', initial_sidebar_state = 'auto')
+    st.title("⚖️Bias Generator and Checker")
+    st.warning("Large language models know 'language' yet may be biased based on their training context. Here, we instead use models to shed light on the biases that may exist in our notes.")
     disclaimer = """**Disclaimer:** This is a early draft tool to identify chart note biases. \n 
 2. This tool is not a real doctor. \n    
 3. You will not take any medical action based on the output of this tool. \n   
@@ -239,11 +239,12 @@ if st.secrets["use_docker"] == "True" or check_password():
     with st.expander('About Bias Checker - Important Disclaimer'):
         st.write("Author: David Liebovitz, MD, Northwestern University")
         st.info(disclaimer)
-        st.write("Last updated 9/26/23")
+         
+        st.session_state.model_bias = st.selectbox("Model Options", ("openai/gpt-3.5-turbo", "openai/gpt-4", "anthropic/claude-3-sonnet:beta", "anthropic/claude-instant-v1", "google/palm-2-chat-bison", "meta-llama/codellama-34b-instruct", "meta-llama/llama-2-70b-chat", "gryphe/mythomax-L2-13b", "nousresearch/nous-hermes-llama2-13b"), index=0)
+        st.write("Last updated 3/20/24")
     with st.expander("Types of Biases (not a complete list)"):
         st.markdown(bias_types)
-    
-    st.session_state.model_bias = st.selectbox("Model Options", ("openai/gpt-3.5-turbo", "openai/gpt-4", "anthropic/claude-3-sonnet:beta", "anthropic/claude-instant-v1", "google/palm-2-chat-bison", "meta-llama/codellama-34b-instruct", "meta-llama/llama-2-70b-chat", "gryphe/mythomax-L2-13b", "nousresearch/nous-hermes-llama2-13b"), index=0)
+   
     if st.session_state.model_bias == "google/palm-2-chat-bison":
         st.warning("The Google model doesn't stream the output, but it's fast. (Will add Med-Palm2 when it's available.)")
         st.markdown("[Information on Google's Palm 2 Model](https://ai.google/discover/palm2/)")
@@ -263,15 +264,15 @@ if st.secrets["use_docker"] == "True" or check_password():
     if st.session_state.model_bias == "meta-llama/codellama-34b-instruct":
         st.markdown("[Information on Meta's CodeLlama](https://huggingface.co/codellama/CodeLlama-34b-Instruct-hf)")
  
-    st.info("Let AI help identify bias 😞 in notes." )
+    # st.info("Let AI help identify bias 😞 in notes." )
     # st.markdown('[Sample Oncology Notes](https://www.medicaltranscriptionsamplereports.com/hepatocellular-carcinoma-discharge-summary-sample/)')
     
     col1, col2 = st.columns(2)
     with col1:
-        task = st.radio("What would you like to do?", ("Generate a sample note and check for bias", "Paste a sample note to check for bias", "Upload a batch of notes to check for bias",))
+        task = st.radio("What would you like to do?", ("Generate a sample note and check for bias", "Paste a sample note to check for bias", "Upload a batch of sample notes to check for bias",))
 
     if task == "Generate a sample note and check for bias":
-        st.sidebar.warning("This is an EARLY PHASE TOOL undergoing significant updates soon. Eventually, it will generate biased yet realistic note examples for us all to learn from.")    
+        st.sidebar.warning("This is an EARLY PHASE TOOL undergoing significant updates soon. Eventually, it will generate biased yet (somewhat) realistic note examples for us all to learn from.")    
         st.warning("Enter details into the sidebar on the left and use the buttons to generate response")
         desired_note_content = st.sidebar.text_input("Please enter a specialty and diagnoses for your generated progress note:", value="Neurology: Migraine")
         patient_attributes = st.sidebar.text_input("Please enter one or more patient attributes you would like to use for your note:", value="Patient is a 45 year old white female")
@@ -294,7 +295,7 @@ if st.secrets["use_docker"] == "True" or check_password():
             st.write(st.session_state.sample_progress_note)
 
         if st.session_state.sample_progress_note != '':
-            if st.sidebar.button("Step 2: Assess for Bias"):
+            if st.button("Step 2: Assess for Bias"):
             
                 bias_assessment = answer_using_prefix(
                 bias_detection_prompt, 
@@ -319,9 +320,9 @@ if st.secrets["use_docker"] == "True" or check_password():
                 model = st.session_state.model_bias,
                 )
             
-    if task == "Upload a batch of notes to check for bias":
+    if task == "Upload a batch of sample notes to check for bias":
         st.warning("No PHI!!! Enter details into the sidebar on the left and use the buttons to generate response")
-        st.session_state.uploaded_file = st.sidebar.file_uploader("Please upload a batch of notes to check for bias: ")
+        st.session_state.uploaded_file = st.sidebar.file_uploader("Please upload a batch of sample notes to check for bias: ")
         if st.button("Assess for Bias"):
             if st.session_state.uploaded_file is not None:
                 st.session_state.copied_note = st.session_state.uploaded_file.getvalue().decode("utf-8")
