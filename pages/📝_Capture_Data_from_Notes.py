@@ -433,17 +433,18 @@ if st.secrets["use_docker"] == "True" or check_password():
         st.write("Author: David Liebovitz, MD, Northwestern University")
         st.info(disclaimer)
         st.write("Last updated 3/17/24")
-        
-    selected_model = st.selectbox("Pick your GPT model:", ("GPT-3.5-turbo ($)","GPT-4 ($$$$)"))
-    if selected_model == "GPT-3.5-turbo ($)":
-        model = "gpt-3.5-turbo"
-        st.session_state.model = model
-    elif selected_model == "GPT-4 ($$$$)":
-        model = "gpt-4-turbo-preview"
-        st.session_state.model = model
+        selected_model = st.selectbox("Pick your GPT model:", ("GPT-3.5-turbo ($)","GPT-4 ($$$$)"))
+        if selected_model == "GPT-3.5-turbo ($)":
+            model = "gpt-3.5-turbo"
+            st.session_state.model = model
+        elif selected_model == "GPT-4 ($$$$)":
+            model = "gpt-4-turbo-preview"
+            st.session_state.model = model
 
  
     st.info("📚 Let AI identify structured content from notes!" )
+        
+
     schema_choice = st.sidebar.radio("Pick your extraction schema:", ("Schema 1", "Schema 2", "Schema 3", "Method 2", "Method 3"))
     # st.markdown('[Sample Oncology Notes](https://www.medicaltranscriptionsamplereports.com/hepatocellular-carcinoma-discharge-summary-sample/)')
     parse_prompt  = """You will be provided with unstructured text about a patient, and your task is to find all information related to any cancer 
