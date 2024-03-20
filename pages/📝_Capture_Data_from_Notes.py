@@ -230,36 +230,36 @@ default_schema = {
       },
       "required": ["patientID", "dateOfBirth", "gender"]
     },
-    "cancerDiagnosis": {
+    "neurologicalDiagnosis": {
       "type": "object",
       "properties": {
         "diagnosisDate": {
           "type": "string",
           "format": "date"
         },
-        "cancerType": {
+        "neurologicalCondition": {
           "type": "string"
         },
-        "cancerStage": {
+        "severity": {
           "type": "string"
         },
-        "histology": {
+        "affectedRegions": {
           "type": "string"
         },
-        "primarySite": {
+        "symptoms": {
           "type": "string"
         },
-        "metastasisSites": {
+        "imagingFindings": {
           "type": "string"
         },
-        "biomarkers": {
+        "laboratoryResults": {
           "type": "string"
         },
         "geneticMutations": {
           "type": "string"
         }
       },
-      "required": ["diagnosisDate", "cancerType", "cancerStage", "histology", "primarySite"]
+      "required": ["diagnosisDate", "neurologicalCondition", "severity", "affectedRegions", "symptoms"]
     },
     "treatmentInformation": {
       "type": "object",
@@ -280,6 +280,15 @@ default_schema = {
         },
         "sideEffects": {
           "type": "string"
+        },
+        "medications": {
+          "type": "string"
+        },
+        "surgeries": {
+          "type": "string"
+        },
+        "rehabilitationTherapy": {
+          "type": "string"
         }
       },
       "required": ["treatmentType", "treatmentStartDate", "treatmentEndDate", "treatmentResponse"]
@@ -294,17 +303,23 @@ default_schema = {
         "currentStatus": {
           "type": "string"
         },
-        "recurrenceInformation": {
+        "progressionInformation": {
           "type": "string"
         },
-        "survivalInformation": {
+        "functionalStatus": {
+          "type": "string"
+        },
+        "cognitiveStatus": {
+          "type": "string"
+        },
+        "neurologicalExamFindings": {
           "type": "string"
         }
       },
-      "required": ["lastFollowUpDate", "currentStatus"]
+      "required": ["lastFollowUpDate", "currentStatus", "functionalStatus", "cognitiveStatus"]
     }
   },
-  "required": ["patientInformation", "cancerDiagnosis", "treatmentInformation", "followUpInformation"]
+  "required": ["patientInformation", "neurologicalDiagnosis", "treatmentInformation", "followUpInformation"]
 }
 
    
@@ -323,64 +338,69 @@ old_schema1 = {
 }
 
 schema2 = {
-"properties": {
-    "patient_last_name": {"type": "string"},
-    "patient_first_name": {"type": "string"},
-    "age_at_cancer_diagnosis": {"type": "integer"},
-    "age_at_cancer_recurrence": {"type": "integer"},
-    "age_at_visit": {"type": "integer"},
-    "specific_cancer_type": {"type": "string"},
-    "cancer_stage_at_diagnosis": {"type": "string"},        
-    "cancer_treatment_history": {"type": "string"},
-    "cancer_treatment_current": {"type": "string"},
-    "cancer_recurrence_status": {"type": "string"},   
-    "cancer_recurrence_date": {"type": "string"},     
-    "cancer_recurrence_treatment": {"type": "string"},
-    "cancer_current_status": {"type": "string"},
-    "cancer_current_status_date": {"type": "string"},
-    "cancer_current_status_details": {"type": "string"},        
-},
-"required": ["patient_last_name", "patient_first_name"],
+    "properties": {
+        "patient_last_name": {"type": "string"},
+        "patient_first_name": {"type": "string"},
+        "age_at_neurological_diagnosis": {"type": "integer"},
+        "age_at_neurological_recurrence": {"type": "integer"},
+        "age_at_visit": {"type": "integer"},
+        "specific_neurological_condition": {"type": "string"},
+        "severity_at_diagnosis": {"type": "string"},
+        "neurological_treatment_history": {"type": "string"},
+        "neurological_treatment_current": {"type": "string"},
+        "neurological_recurrence_status": {"type": "string"},
+        "neurological_recurrence_date": {"type": "string"},
+        "neurological_recurrence_treatment": {"type": "string"},
+        "neurological_current_status": {"type": "string"},
+        "neurological_current_status_date": {"type": "string"},
+        "neurological_current_status_details": {"type": "string"},
+        "neurological_symptoms": {"type": "string"},
+        "neurological_exam_findings": {"type": "string"},
+        "imaging_findings": {"type": "string"},
+        "laboratory_results": {"type": "string"},
+        "functional_status": {"type": "string"},
+        "cognitive_status": {"type": "string"},
+    },
+    "required": ["patient_last_name", "patient_first_name"],
 }
-
 schema3 = {
-"properties": {
-    "patient_last_name": {"type": "string"},
-    "patient_first_name": {"type": "string"},
-    "patient_age": {"type": "integer"},
-    "patient_sex": {"type": "string"},
-    "race": {"type": "string"},
-    "cancer_primary_site": {"type": "string"},
-    "laterality": {"type": "string"},
-    "histologic_type": {"type": "string"},
-    "behavior_code_ICD_O3": {"type": "string"},
-    "grade": {"type": "string"},
-    "diagnosis_confirmation": {"type": "string"},
-    "diagnosis_date": {"type": "string"}, # ISO date format (yyyy-mm-dd) is recommended
-    "sequence_number": {"type": "string"},
-    "tumor_size": {"type": "integer"},
-    "extension": {"type": "string"},
-    "lymph_nodes": {"type": "string"},
-    "prognostic_factors": {"type": "string"},
-    "metastases": {"type": "string"},
-    "surgery_of_primary_site": {"type": "string"},
-    "surgery_to_other_regions": {"type": "string"},
-    "treatment_start_date": {"type": "string"}, # ISO date format (yyyy-mm-dd) is recommended
-    "treatment_end_date": {"type": "string"}, # ISO date format (yyyy-mm-dd) is recommended
-    "radiation": {"type": "string"},
-    "chemotherapy": {"type": "string"},
-    "immunotherapy": {"type": "string"},
-    "hormone_therapy": {"type": "string"},
-    "stem_cell_transplant": {"type": "string"},
-    "tumor_marker_tests": {"type": "string"},
-    "patient_survival_time": {"type": "integer"},
-    "cancer_status_at_last_followup": {"type": "string"},
-    "last_followup_date": {"type": "string"}, # ISO date format (yyyy-mm-dd) is recommended
-    "cause_of_death": {"type": "string"},
-    "tobacco_history": {"type": "string"},
-    "alcohol_use": {"type": "string"},
-},
-"required": ["patient_last_name", "patient_first_name"],
+    "properties": {
+        "patient_last_name": {"type": "string"},
+        "patient_first_name": {"type": "string"},
+        "patient_age": {"type": "integer"},
+        "patient_sex": {"type": "string"},
+        "race": {"type": "string"},
+        "neurological_condition": {"type": "string"},
+        "affected_hemisphere": {"type": "string"},
+        "specific_diagnosis": {"type": "string"},
+        "icd_code": {"type": "string"},
+        "severity": {"type": "string"},
+        "diagnosis_confirmation": {"type": "string"},
+        "diagnosis_date": {"type": "string"},  # ISO date format (yyyy-mm-dd) is recommended
+        "episode_number": {"type": "string"},
+        "lesion_size": {"type": "integer"},
+        "lesion_location": {"type": "string"},
+        "neurological_symptoms": {"type": "string"},
+        "prognostic_factors": {"type": "string"},
+        "comorbidities": {"type": "string"},
+        "surgery": {"type": "string"},
+        "deep_brain_stimulation": {"type": "string"},
+        "treatment_start_date": {"type": "string"},  # ISO date format (yyyy-mm-dd) is recommended
+        "treatment_end_date": {"type": "string"},  # ISO date format (yyyy-mm-dd) is recommended
+        "physical_therapy": {"type": "string"},
+        "occupational_therapy": {"type": "string"},
+        "speech_therapy": {"type": "string"},
+        "medications": {"type": "string"},
+        "assistive_devices": {"type": "string"},
+        "diagnostic_tests": {"type": "string"},
+        "patient_follow_up_duration": {"type": "integer"},
+        "neurological_status_at_last_followup": {"type": "string"},
+        "last_followup_date": {"type": "string"},  # ISO date format (yyyy-mm-dd) is recommended
+        "cause_of_death": {"type": "string"},
+        "tobacco_history": {"type": "string"},
+        "alcohol_use": {"type": "string"},
+    },
+    "required": ["patient_last_name", "patient_first_name"],
 }
 
 
@@ -400,8 +420,8 @@ if st.secrets["use_docker"] == "True" or check_password():
     # Define Streamlit app layout
 
     st.set_page_config(page_title='Neurology Parser Assistant', layout = 'centered', page_icon = ':stethoscope:', initial_sidebar_state = 'auto')
-    st.title("Oncology Parser Assistant")
-    st.warning("""Who likes clicking boxes? What if AI could recognize all concepts and file them where they belong in the chart? This tool illustrates
+    st.title("Neurology Parser Assistant")
+    st.warning("""Who likes EHR click? What if AI could recognize all concepts and file them where they belong in the chart? This tool illustrates
                progress in that direction.""")
     disclaimer = """**Disclaimer:** This is a tool to assist chart abstraction for cancer related diagnoses. \n 
 2. This tool is not a real doctor. \n    
