@@ -10,6 +10,7 @@ import streamlit as st
 from bs4 import BeautifulSoup
 import openai  # For accessing the openai module's functionalities
 from openai import OpenAI  # For direct use of the OpenAI class
+import llama_index
 from llama_index.llms.openai import OpenAI as llamaOpenAI
 from llama_index.core import VectorStoreIndex, SimpleDirectoryReader, ServiceContext
 from llama_index.core import Document
