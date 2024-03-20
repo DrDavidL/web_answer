@@ -277,7 +277,7 @@ if check_password2() or st.secrets["use_docker"] == "True":
     else:
         with st.sidebar:
             audio_bytes = audio_recorder(
-            text="Click, pause, and ask a question:",
+            text="Click, pause for 3 seconds, and ask a question:",
             recording_color="#e8b62c",
             neutral_color="#6aa36f",
             icon_name="user",
