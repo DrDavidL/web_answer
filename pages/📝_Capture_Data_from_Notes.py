@@ -9,7 +9,7 @@ from extract_prompts import *
 import openai
 import time
 # from openai_function_call import OpenAISchema
-import instructor
+# import instructor
 from openai import OpenAI
 import json
 
