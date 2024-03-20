@@ -223,7 +223,7 @@ Provide a detailed overview of indapamide, focusing on current best practices. I
 ```
 **Goal:** By enriching the original question with specifics that address likely follow-up inquiries and specifying an "optimal learning" format, you aim to craft an improved question that prompts a GPT model to deliver an answer that is both comprehensive and neatly organized. Return only the enhanced question, ready for an efficient and structured response from the GPT model.
 
-**Final Critical Note** Return only the text for the improved question. No additional comments, delimiters or other text should be included.
+**Final Critical Note** Return only the improved question. It will be sent directly to the GPT model. No additional comments, delimiters or other text should be included.
 """
 
 rag_prompt = """Given the specific context of {context}, utilize your retrieval capabilities to find the most 
