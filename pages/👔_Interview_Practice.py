@@ -202,7 +202,9 @@ if "last_response_interview" not in st.session_state:
     st.session_state["last_response_interview"] = "Hi, I'm Dr. Smith! Nice to meet you!"
 
 if check_password2() or st.secrets["use_docker"] == "True":
-    st.info("Have fun. Enter responses at the bottom of the page or choose the Microphone option. This tool uses openai's GPT3.5 turbo 16k model.")
+    st.warning("""Imagine you're interviewing for a job. This may be clinical or business within your field. Enter responses at the bottom 
+               of the page or choose the Microphone option. This tool uses openai's GPT3.5 turbo 16k model.
+               Development is underway for clinical scenarios. :) """)
     system_context = st.radio("Select an interviewer type :", ("Tough", "Nice",), horizontal = True, index=0)
     specialty = st.text_input("Enter your sought specialty area", placeholder="e.g. Stroke Neurology")
     position = st.text_input("Enter your sought position", placeholder="e.g. resident, faculty, administrator")
