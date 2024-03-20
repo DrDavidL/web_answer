@@ -77,7 +77,8 @@ def check_password2():
         return True
 
 st.title("✔ Prior Authorization Help")
-st.write("This is for educational purposes only, please do not input real patient information or use in clinical practice.")
+st.warning("""This is for educational purposes only, please do not input real patient information or use in clinical practice. For the 
+          purposes of the AAN, please try this out with scenarios you have encountered that need prior authorization, and don't forget to provide feedback!""")
 
 if check_password2() or st.secrets["use_docker"] == "True":
     # Use st.radio to create tabs
