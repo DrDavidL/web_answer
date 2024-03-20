@@ -420,7 +420,7 @@ if st.secrets["use_docker"] == "True" or check_password():
     # Define Streamlit app layout
 
     st.set_page_config(page_title='Neurology Parser Assistant', layout = 'centered', page_icon = ':stethoscope:', initial_sidebar_state = 'auto')
-    st.title("Neurology Parser Assistant")
+    st.title("📝 Neurology Parser Assistant")
     st.warning("""Who likes EHR click? What if AI could recognize all concepts and file them where they belong in the chart? This tool illustrates
                progress in that direction with a variety of methods. Soon, one or more will meet muster for research or clinical use!""")
     disclaimer = """**Disclaimer:** This is a tool to assist chart abstraction for cancer related diagnoses. \n 
@@ -442,7 +442,7 @@ if st.secrets["use_docker"] == "True" or check_password():
             st.session_state.model = model
 
  
-    st.info("📚 Let AI identify structured content from notes!" )
+    # st.info("📚 Let AI identify structured content from notes!" )
         
 
     schema_choice = st.sidebar.radio("Pick your extraction schema:", ("Schema 1", "Schema 2", "Schema 3", "Method 2", "Method 3"))
