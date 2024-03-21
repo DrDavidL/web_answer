@@ -71,8 +71,9 @@ title1, title2 = st.columns([1, 3])
 
 with title1:
 
-    medimate_robot = Image.open('static/medimate_robot.png')
-    st.image(medimate_robot, use_column_width=True)
+    colorful_brain= Image.open('static/colorful_brain.png')
+    # medimate_robot = Image.open('static/medimate_robot.png')
+    st.image(colorful_brain, use_column_width=True)
     
 with title2:
         

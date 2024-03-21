@@ -1065,13 +1065,10 @@ if "skim_output_text" not in st.session_state:
 if "expanded" not in st.session_state:
     st.session_state["expanded"] = True
    
-st.set_page_config(page_title='Communication and DDX', layout = 'centered', page_icon = ':stethoscope:', initial_sidebar_state = 'auto')    
-title1, title2 = st.columns([1, 3])
-
-    
-with title2:
-        
-    st.title("Communication and DDx")
+st.set_page_config(page_title='🗨️Communication and DDX', layout = 'centered', page_icon = ':stethoscope:', initial_sidebar_state = 'auto')    
+     
+st.title("🗨️Communication and DDx")
+st.warning("Please try the features on this tab and the Patient Ed and DDx tabs, too! This is a work in progress and we are interested in your feedback and perceived value now and in the future.")
 
 
     # st.info("With OpenAI announcement 11-6-2023, new model added: GPT-4-1106-preview. It's in beta and allows longer text inputs than GPT-4.")

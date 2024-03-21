@@ -23,7 +23,7 @@ from using_docker import using_docker
 
 
 st.set_page_config(page_title="Interview Practice!", page_icon="🧐")
-st.title("🧐 Interview Practice")
+st.title("👔 Interview Practice")
 
 def talk_stream(model, voice, input):
     api_key = st.secrets["OPENAI_API_KEY"]
