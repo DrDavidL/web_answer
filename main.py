@@ -94,9 +94,11 @@ if st.secrets["use_docker"] == "True" or check_password():
     col1, col2, col3 = st.columns(3)
 
     with col2:
-        st.page_link("pages/🧠_Parkinson_Chat.py", label= "Parkinson's Chat", icon = "🧠")
+        st.page_link("pages/🧠_Parkinson_Chat.py", label= "Reliable Chat", icon = "🧠")
         # st.page_link("pages/🧐_Interview_Practice.py", label = "Interview Practice", icon = "🧐")
         st.page_link("pages/🗨️_Communication_and_DDx.py", label = "Communication and DDx", icon = "🗨️")
         st.page_link("pages/👔_Interview_Practice.py", label = "Interview Practice", icon = "👔")
         st.page_link("pages/👩🏾‍💻_My_AI_Team.py", label = "My AI Team", icon = "👩🏾‍💻")
         st.page_link("pages/⚖️_Bias_Detection.py", label = "Bias Detection", icon = "⚖️")
+        st.page_link("pages/✔_Prior_Authorization_Help.py", label = "Prior Authorization Help", icon = "✔")
+        st.page_link("pages/📝_Capture_Data_from_Notes.py", label = "Capture Data From Notes", icon = "📝")
