@@ -10,7 +10,6 @@ import streamlit as st
 from bs4 import BeautifulSoup
 import openai  # For accessing the openai module's functionalities
 from openai import OpenAI  # For direct use of the OpenAI class
-import llama_index
 from llama_index.llms.openai import OpenAI as llamaOpenAI
 from llama_index.core import VectorStoreIndex, SimpleDirectoryReader, ServiceContext
 from llama_index.core import Document
@@ -482,7 +481,7 @@ def check_password():
 
 
 
-st.title("👩🏾‍💻My AI Team")
+st.title("My AI Team")
 with st.expander("Please read before using"):
     st.write("This app is a demonstration of consensus approaches to answering clinical questions using AI. It is not intended for direct clinical use. Always validate answers independently before using them in clinical practice. This app is for educational purposes only.")
     st.info("You may use default settings or modify them by selecting the models on the left sidebar that you would like to use to answer your question. The first two models will be used to generate answers, and the third model will be used to reconcile the two answers and any web search results.")
@@ -562,22 +561,24 @@ if st.secrets["use_docker"] == "True" or check_password():
 
 
 
-    improved_expander = False 
+    improved_expander = False    
     if st.button("Improve my question!"):
         improved_expander = True
-
-        improved_question = client.chat.completions.create(
-            model="gpt-3.5-turbo",
-            messages=[
-                {"role": "system", "content": system_prompt_improve_question},
-                {"role": "user", "content": user_prompt}
-            ],
-            stream=False,
-        )
+        try:
+            improved_question = client.chat.completions.create(
+                model="gpt-3.5-turbo",
+                messages=[
+                    {"role": "system", "content": system_prompt_improve_question},
+                    {"role": "user", "content": user_prompt}
+                ],
+                stream=False,
+            )
+        except:
+            st.error("We have an error at OpenAI. Check https://status.openai.com.")
         st.session_state["improved_question"] = improved_question.choices[0].message.content
     # Display the response from the API.
     if st.session_state.improved_question:
-        with st.expander("Your Improved Question:", expanded=improved_expander):
+        with st.expander("Your improved question:", expanded=improved_expander):
             st.text_area("Improved Question - edit below as needed. If editing, hit your CMD (or CTRL) + *return* key when done editing", st.session_state.improved_question, height=150, key="improved_question_text_area")
     col1, col2 = st.columns(2)
     with col1:
@@ -760,7 +761,7 @@ if st.secrets["use_docker"] == "True" or check_password():
         final_answer = reconcile(st.session_state.final_question, model3, f'A {model1} response was:\n\n{st.session_state.model1_response}', f'A {model2} response was:\n\n{st.session_state.model2_response}', f'Information from the web was:\n\n{web_addition}', updated_reconcile_prompt)
         st.session_state.final_response = f'{st.session_state.final_question}\n\nFinal Response from {model3}\n\n{final_answer}'
         st.markdown(final_answer)
-        html = markdown2.markdown(final_answer,  extras=["tables"])
+        html = markdown2.markdown(final_answer, extras=["tables"])
         st.download_button('Download Reconciled Response', html, f'final_response.html', 'text/html')
     
     with st.sidebar:
@@ -799,7 +800,7 @@ if st.secrets["use_docker"] == "True" or check_password():
                 convo_str = ''
                 convo_str = "\n\n________\n\n________\n\n".join(st.session_state.thread)
                 st.markdown(convo_str)
-                html = markdown2.markdown(convo_str,  extras=["tables"])
+                html = markdown2.markdown(convo_str, extras=["tables"])
                 st.download_button('Download Conversation Record', html, f'convo.html', 'text/html')
 
                     
@@ -807,7 +808,7 @@ if st.secrets["use_docker"] == "True" or check_password():
                 
 
     
-    if st.checkbox("Ask a follow-up question? (Prior answers appear in the left sidebar.)"):
+    if st.checkbox("Enter a follow-up question number or ask your own follow-up question. (Prior responses appear in the left sidebar.)"):
     
         final_followup_prompt = f'{followup_system_prompt} Question was:\n\n{user_prompt} \n\n Answer was {st.session_state.final_response}'
     
@@ -846,6 +847,6 @@ if st.secrets["use_docker"] == "True" or check_password():
                     stream=True,
                 )
                 response = st.write_stream(stream)
-                html = markdown2.markdown(response,  extras=["tables"])
+                html = markdown2.markdown(response, extras=["tables"])
                 st.download_button('Download Followup Response', html, f'followup_response.html', 'text/html')
             st.session_state.messages.append({"role": "assistant", "content": response})

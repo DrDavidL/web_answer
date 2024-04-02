@@ -50,13 +50,13 @@ def check_password2():
 # Streamlit app
 st.title("Reliable Content Chat Example")
 with st.expander("ℹ️ About this App and Settings"):
-    st.warning("Validate all responses - this is for exploration of AI at the AAN meeting.")
+    st.warning("Validate all responses - this is for exploration of AI at the NCCN meeting.")
     st.write("Author: David Liebovitz, MD")
     
 with st.sidebar:
     model = st.selectbox("Select a model:", ["gpt-3.5-turbo", "gpt-4-turbo-preview"])
-    with st.expander("Parkinson's Disease Sources"):
-        st.markdown(references_used)
+    # with st.expander("Parkinson's Disease Sources"):
+    #     st.markdown(references_used)
     
 
 # Get user input
@@ -66,10 +66,10 @@ st.warning("""This app uses pre-processed content from the NLM Bookshelf. The pu
            The response will indicate if the reference material available fails to answer the question. """)
 
 if st.secrets["use_docker"] == "True" or check_password2():
-    topic = st.radio("Select a topic:", ["Parkinson's Disease", "ACP Suggested Content to Include in Referrals"], horizontal=True)
-    if topic == "Parkinson's Disease":
-        vectorstore_label = "parkinson_disease.faiss"
-        question_placeholder = "What are the symptoms of Parkinson's disease?"
+    topic = st.radio("Select a topic:", ["Colon Cancer Screening", "ACP Suggested Content to Include in Referrals"], horizontal=True)
+    if topic == "Colon Cancer Screening":
+        vectorstore_label = "colon_ca.faiss"
+        question_placeholder = "Why should a patient have a colon cancer screening?"
     elif topic == "ACP Suggested Content to Include in Referrals":
         st.sidebar.markdown("[ACP Referral Guidelines](https://www.acponline.org/clinical-information/high-value-care/resources-for-clinicians/high-value-care-coordination-hvcc-toolkit/pertinent-data-sets)")
         vectorstore_label = "neuro_assess.faiss"
@@ -83,7 +83,11 @@ if st.secrets["use_docker"] == "True" or check_password2():
                 )
 
         # Load the FAISS database
-        embeddings = OpenAIEmbeddings(openai_api_key=st.secrets['OPENAI_API_KEY'],model="text-embedding-3-large")
+        if topic == "Colon Cancer Screening":
+            model = "text-embedding-ada-002"
+        elif topic == "ACP Suggested Content to Include in Referrals":
+            model = "text-embedding-3-large"
+        embeddings = OpenAIEmbeddings(openai_api_key=st.secrets['OPENAI_API_KEY'],model=model)
         vectorstore = FAISS.load_local(vectorstore_label, embeddings)
 
     # # Set up the OpenAI LLM
