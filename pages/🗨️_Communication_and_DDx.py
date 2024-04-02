@@ -1191,7 +1191,7 @@ if st.secrets["use_docker"] == "True" or check_password():
         if task == "Generate discharge instructions":
             answer = ''
             start_time = time.time()
-            reason_for_hospital_stay = st.text_area("Please enter the reason for the hospital stay.", placeholder="e.g., acute ischemic stroke", label_visibility='visible',)
+            reason_for_hospital_stay = st.text_area("Please enter the reason for the hospital stay.", placeholder="e.g., neutropenic fever", label_visibility='visible',)
             surg_procedure = st.text_area("Please enter any procedure(s) performed and any special concerns.", placeholder="e.g., lumbar puncture", label_visibility='visible',)
             other_concerns = st.text_area("Please enter any other concerns.", placeholder="e.g., chronic hand tremor", label_visibility='visible',)
             dc_meds = st.text_area("Please enter the discharge medications.", placeholder="e.g., lisinopril 10 mg daily for HTN", label_visibility='visible',)
@@ -1482,7 +1482,7 @@ if st.secrets["use_docker"] == "True" or check_password():
         
         sample_topic = "dietary guidance for a patient with migraines, kidney disease, hypertension, obesity, and CAD"
         patient_ed_temp = st.session_state.temp
-        my_ask_for_pt_ed = st.text_area("Generate patient education materials:", placeholder="e.g., dietary guidance needed for obesity", label_visibility='visible', height=100)
+        my_ask_for_pt_ed = st.text_area("Generate patient education materials:", placeholder="e.g., dietary guidance needed for prevention of cancer recurrence", label_visibility='visible', height=100)
         my_ask_for_pt_ed = "Generate patient education materials for: " + my_ask_for_pt_ed.replace("\n", " ")
         my_ask_for_pt_ed = my_ask_for_pt_ed + "with health literacy level: " + pt_ed_health_literacy
         if st.button("Click to Generate **Draft** Custom Patient Education Materials"):

@@ -108,9 +108,9 @@ if check_password2() or st.secrets["use_docker"] == "True":
     st.title('Patient Details')
     patient_name = st.text_input("Enter patient's name", value="Jane Smith")
     patient_dob = st.text_input("Enter patient's date of birth", value="01/01/1950")
-    med_pa = st.text_input("Enter medication or procedure you are trying to get a prior authorization for", value="lecanemab")
-    diagnosis = st.text_input("Enter patient's diagnosis", value="Alzheimer's disease")
-    extra_info = st.text_area("Enter any additional information you would like included in the letter here (optional)", value = "Patient has beend diagnosed with Alzheimer's disease, has no history of stroke/TIA or evidence of other forms of dementia, and has a PET showing prescence of beta-amyloid plaques")
+    med_pa = st.text_input("Enter medication or procedure you are trying to get a prior authorization for", value="axicabtagene ciloleucel")
+    diagnosis = st.text_input("Enter patient's diagnosis", value="DLBCL")
+    extra_info = st.text_area("Enter any additional information you would like included in the letter here (optional)", value = "The patient with diffuse large B-cell lymphoma (DLBCL) has undergone and failed to respond to two or more lines of systemic therapy, including high-dose chemotherapy and autologous stem cell transplant.")
     if st.button("Compose Initial Prior Authorization"):
         template_medication = f"""
 
@@ -118,7 +118,7 @@ if check_password2() or st.secrets["use_docker"] == "True":
 
             To Whom It May Concern,
 
-            I am writing to request authorization for {med_pa} for my patient, {patient_name}, diagnosed with {diagnosis}. 
+            I am writing to request authorization for Yescarta (axicabtagene ciloleucel) for my patient, {patient_name}, diagnosed with diffuse large B-cell lymphoma (DLBCL).
 
             Physician's Information:
             Name: {physician_name}
@@ -131,19 +131,15 @@ if check_password2() or st.secrets["use_docker"] == "True":
             Name: {patient_name}
             DOB: {patient_dob}
 
-            Based on the patient's condition and the drug criteria requirements listed below, we believe the patient meets all necessary criteria for {med_pa}.
+            Based on the patient's condition and having failed two or more lines of systemic therapy, we believe the patient meets all necessary criteria for Yescarta.
 
             Drug Criteria Requirements Met:
-            - Patient is 50 years of age or older; or If less than 50 years of age, member has a genetic mutation in amyloid precursor protein (APP), presenilin-1 (PSEN1), or presenilin-2 (PSEN2), or other clinical documentation to support early onset AD.
-            - Patinet has mild cognitive impairment due to AD or mild AD dementia
-            - Patient has objective evidence of cognitive impairment at baseline
-            - Patient has one of the following scores at baseline on any of the assessment tools: Clinical Dementia Rating-Global Score (CDR-GS) of 0.5 or 1, or Mini-Mental Status Examination (MMSE) score of 21 - 30, or MOCA score greater than or equal to 16
-            - Patient has a positron emission tomography (PET) scan confirming the presence of amyloid pathology or has results from a lumbar puncture confirming the presence of elevated phosphorylated tau (P-tau) protein and/or elevated total tau (T-tau) protein, and reduced beta amyloid-42 (AB42) OR a low AB42/AB40 ratio as determined by the lab assay detected in cerebrospinal fluid (CSF). 
-            - Patient has had a brain MRI within one year
-            - Patient has had genotype testing for ApoE ε4 status has been performed prior to initiation of treatment
-            - Patient doesn' use antithrombotics, or if they do they have been on a stable dose for at least 4 weeks.
+            - Patient has been diagnosed with relapsed or refractory large B-cell lymphoma, including DLBCL, after two or more lines of systemic therapy.
+            - Patient has a performance status that supports the feasibility of undergoing the CAR T-cell therapy treatment process.
+            - Patient has adequate organ function as required for Yescarta therapy.
+            - Patient has been informed of the potential benefits and risks of Yescarta therapy, including the risk of cytokine release syndrome (CRS) and neurologic toxicities, and wishes to proceed.
 
-            Please consider this letter as a formal request for the prior authorization of the aforementioned medication. Attached are all necessary medical records and documentation supporting this request.
+            Please consider this letter as a formal request for the prior authorization of Yescarta. Attached are all necessary medical records, including prior treatment history and documentation supporting this request.
 
             Thank you for your attention to this matter.
 
@@ -151,10 +147,11 @@ if check_password2() or st.secrets["use_docker"] == "True":
 
             {physician_name}
             """
+
         
         template_procedure = f"""
     To Whom It May Concern,
-            I am writing to request authorization for {med_pa} for my patient, {patient_name}, diagnosed with {diagnosis}. 
+            I am writing to request authorization for a PET/CT scan for my patient, {patient_name}, diagnosed with {diagnosis}. 
 
             Physician's Information:
             Name: {physician_name}
@@ -167,22 +164,20 @@ if check_password2() or st.secrets["use_docker"] == "True":
             Name: {patient_name}
             DOB: {patient_dob}
 
-            Botulinum toxin injections are medically necessary and indicated in this patient who is disabled by blepharospasm.
-            Patient continues to receive benefit from these injections. Injections will need to be repeated every 3-4 months in order to 
-            provide continued benefit for the treatment of this patient's condition.
+            A PET/CT scan is medically necessary to assess the extent of disease, evaluate treatment response, and guide further management in this patient with diffuse large B-cell lymphoma (DLBCL). Given the patient's history of relapsed or refractory DLBCL after two or more lines of systemic therapy, accurate staging and assessment through PET/CT are critical to optimizing the treatment approach, including consideration for targeted therapies such as CAR T-cell therapy.
 
             Sincerely,
             {physician_name}
-        """
+"""
 
-        user_query = {"role": "system", "content": f"""Generate a prior authorization letter for either a medication or a procedure. If {med_pa} is a medication, 
-                generate a medication prior authorization letter, if {med_pa} is a procedure, generate a procedure prior authorization letter. For a medication use the following structure: {template_medication}. 
+
+        user_query = {"role": "system", "content": f"""Generate a prior authorization letter for either a medication or a procedure: {med_pa}  If {med_pa} is a medication, 
+                generate a medication prior authorization letter, if {med_pa} is a procedure, generate a procedure prior authorization letter. For a medication use the following templated (with the current request, {med_pa}): {template_medication}. 
                 The strucutre is an example for the drug Lecanemab, if a separate drug is requested please fill out the template appropriately with that drug's requirements. 
                 Please include the drug requirements in a wording that is approrpriate for a doctor sending a letter to an insurance company about their patient. Please assume the patient has 
-                met all the requirements for the drug. For a procedure please use the following strucutre : {template_procedure}. The
-                structure is an example for a botox procedure with a patient with a diagnosis of blepharospasm. The wording will need to change depending on the diagnosis and procedure requested. Please include procedure reuiqrements that is approrpriate for that specific procedure requested ({med_pa}) 
-                Please assume the patient qualifies for the procedure. For either type of letter (one for a medication or one for a procedure) replace today's date with the actual date of today. Please include {extra_info} if provided in the letter where approrpriate, 
-                if {extra_info} is blank or n/a, please don't include."""}
+                met all the requirements for the drug. For a procedure please use the following strucutre : {template_procedure}, again for the current reequest, {med_pa}. The wording will need to change depending on the diagnosis and procedure requested. Please include procedure requirements that are approrpriate for that specific procedure requested ({med_pa}) 
+                Please assume the patient qualifies for the procedure. For either type of letter (one for a medication or one for a procedure) replace today's date with the actual date of today. Include blanks for additional details to be provided by the user if not given. Please include {extra_info} if provided in the letter where approrpriate, 
+                """}
         
         st.session_state.messages.append(user_query)
         response_text = ChatGPT(user_query)

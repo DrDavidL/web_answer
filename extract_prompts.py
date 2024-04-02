@@ -1,4 +1,4 @@
-prefix = """You generate realistic and complext progress notes for patients with cancer. You include made up names, ages, and MRNs for patients. 
+prefix = """You generate realistic and complex progress notes for patients with cancer. You include made up names, ages, and MRNs for patients. 
 You include made up dates for the notes. You include made up names for the providers. You include made up names for the hospitals. You include details
 about the patient's cancer diagnosis, treatment, and response to treatment. You include details about the patient's symptoms and side effects. You include
 details about the patient's other medical diagnoses, medications, and allergies. You include details about the patient's family history. You include details
@@ -177,40 +177,42 @@ complex = """{
 """
 
 system_prompt = """
-**# Comprehensive Neurology History and Physical Exam Note Information Extraction 🧠**
-Engage Neurological Entity and Finding Identification Procedures and initiate Structured Data Extraction Techniques.
-Activate JSON Structure Generation Strategies for clear and consistent representation of neurology history and exam findings.
-[Comprehensive Neurology History and Physical Exam Note Information Extraction 🧠
+**# Comprehensive Oncology History and Physical Exam Note Information Extraction 🩺**
+Engage Oncological Entity and Finding Identification Procedures and initiate Structured Data Extraction Techniques.
+Activate JSON Structure Generation Strategies for clear and consistent representation of oncology history and exam findings.
+[Comprehensive Oncology History and Physical Exam Note Information Extraction 🩺
   {
-     Neurological Entity and Finding Identification Procedures 🔍 [🩺, 📝] ∴
+     Oncological Entity and Finding Identification Procedures 🔍 [🩺, 📝] ∴
      Structured Data Extraction Techniques 🗃️ [🧬, 📊] ∴
      JSON Structure Generation Strategies 🚀 [🏗️, 📈]
   }
   ≈>
   [Data Accuracy Assurance 🎯 ∴ Proper Medical Terminology and Value Enforcement ⚕️]
   ⊃
-  Clear and Consistent Neurology History and Exam Findings Representation 📊
+  Clear and Consistent Oncology History and Exam Findings Representation 📊
      {
-        **Neurology Note Preprocessing and Segmentation**
-           [Preprocess the neurology note, removing noise and segmenting it into relevant sections (e.g., history, physical exam, assessment, and plan)]
-        **Neurological Entity and Finding Recognition**
-           [Identify the main neurological entities, findings, and assessments mentioned in the note using medical NLP techniques]
+        **Oncology Note Preprocessing and Segmentation**
+           [Preprocess the oncology note, removing noise and segmenting it into relevant sections (e.g., history, physical exam, assessment, and plan)]
+        **Oncological Entity and Finding Recognition**
+           [Identify the main oncological entities, findings, and assessments mentioned in the note using medical NLP techniques]
         **Structured Data Extraction**
-           [Extract the relevant information for each identified neurological entity and finding, such as symptoms, onset, duration, severity, and examination results]
+           [Extract the relevant information for each identified oncological entity and finding, such as cancer type, stage, histology, treatment, and response]
         **JSON Object Population**
-           [Populate the predefined JSON structure with the extracted neurological data, ensuring proper data type formatting and consistency]
+           [Populate the predefined JSON structure with the extracted oncological data, ensuring proper data type formatting and consistency]
         **Data Accuracy Verification**
-           [Verify the accuracy and completeness of the populated JSON object against the original neurology note]
+           [Verify the accuracy and completeness of the populated JSON object against the original oncology note]
         **Missing Data Handling**
            [Handle missing or optional data by using default values, null placeholders, or omitting the corresponding JSON properties]
         **JSON Structure Validation**
            [Validate the populated JSON object against the predefined JSON schema to ensure consistency and adherence to the expected structure]
         **Output Generation**
-           [Generate the final JSON output representing the extracted neurology history and exam findings, adhering to the predefined structure and schema]
+           [Generate the final JSON output representing the extracted oncology history and exam findings, adhering to the predefined structure and schema]
      }]
 
 **# Predefined JSON Schema**
-```json
+
+json 
+
 {
   "patientInfo": {
     "name": "string",
@@ -325,16 +327,47 @@ Activate JSON Structure Generation Strategies for clear and consistent represent
     "genitourinary": "string",
     "musculoskeletal": "string",
     "integumentary": "string",
-    "neurological": {
-      "mentalStatus": "string",
-      "cranialNerves": "string",
-      "motorFunction": "string",
-      "sensoryFunction": "string",
-      "reflexes": "string",
-      "coordination": "string",
-      "gait": "string"
-    },
+    "lymphNodes": "string",
+    "neurological": "string",
     "psychiatric": "string"
+  },
+  "cancerDiagnosis": {
+    "cancerType": "string",
+    "cancerStage": "string",
+    "histology": "string",
+    "primarySite": "string",
+    "metastasisSites": [
+      "string"
+    ],
+    "biomarkers": [
+      "string"
+    ],
+    "geneticMutations": [
+      "string"
+    ]
+  },
+  "treatment": {
+    "surgeries": [
+      "string"
+    ],
+    "chemotherapy": [
+      "string"
+    ],
+    "radiationTherapy": [
+      "string"
+    ],
+    "targetedTherapy": [
+      "string"
+    ],
+    "immunotherapy": [
+      "string"
+    ],
+    "hormonalTherapy": [
+      "string"
+    ],
+    "clinicalTrials": [
+      "string"
+    ]
   },
   "assessment": [
     "string"
@@ -343,8 +376,7 @@ Activate JSON Structure Generation Strategies for clear and consistent represent
     "string"
   ]
 }
+
 """
 
-neurology_note = """Generate a comprehensive neurology H&P note with the diagnosis supplied. Include pseudonyms and
-use content that matches that an experienced neurologist can understand and prefer to use. be sure to include
-a comprehensive assessment and plan that addresses the diagnosis and any results."""
+oncology_note = """Generate a comprehensive oncology H&P note with the diagnosis supplied. Include pseudonyms and use content that matches that an experienced oncologist can understand and prefer to use. Be sure to include a comprehensive assessment and plan that addresses the diagnosis and any results."""

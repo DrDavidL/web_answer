@@ -1,60 +1,41 @@
 import streamlit as st
 import openai
 import os  
-# from langchain.chat_models import ChatOpenAI
 from langchain_community.chat_models import ChatOpenAI
 from langchain.chains import create_extraction_chain, create_extraction_chain_pydantic
 from langchain.prompts import ChatPromptTemplate
 from extract_prompts import *
 import openai
 import time
-# from openai_function_call import OpenAISchema
-# import instructor
 from openai import OpenAI
 import json
 
 from pydantic import BaseModel, Field
 
-class NeurologicDiagnosis(BaseModel):
+class OncologyDiagnosis(BaseModel):
     last_name: str = Field(..., description="Patient's last name")
     first_name: str = Field(..., description="Patient's first name")
     age: int = Field(..., description="Patient's age")
     sex: str = Field(..., description="Patient's sex") 
-    diagnosis_type: str = Field(..., description="Type of neurological condition")
+    diagnosis_type: str = Field(..., description="Type of cancer")
     diagnosis_date: str = Field(..., description="Date of diagnosis")
-    neuro_tests: str = Field(..., description="Neurological tests conducted")
-    treatments: str = Field(..., description="Treatments for the neurological condition")
+    cancer_tests: str = Field(..., description="Cancer tests conducted")
+    treatments: str = Field(..., description="Treatments for the cancer")
     medication: bool = Field(..., description="Indicates if medication is prescribed")
     medication_details: str = Field(..., description="Details of prescribed medication")
-    therapy: bool = Field(..., description="Indicates if therapy is prescribed")
-    therapy_details: str = Field(..., description="Details of therapy")
+    chemotherapy: bool = Field(..., description="Indicates if chemotherapy is prescribed")
+    chemotherapy_details: str = Field(..., description="Details of chemotherapy")
     surgery: bool = Field(..., description="Indicates if surgery was performed")
     surgery_details: str = Field(..., description="Details of surgery")
     alcohol_use: str = Field(..., description="Alcohol use")
     tobacco_history: str = Field(..., description="Tobacco history")
 
 
-# @st.cache_data
-# def method3(chart, model, output = "json"):
-#     input = f'Here is chart content: {chart} and here is the preferred output: {output}'
-#     completion = openai.ChatCompletion.create(
-#         model=model,
-#         functions=[ChartDetails.openai_schema],
-#         messages=[
-#             {"role": "system", "content": "I'm going to review medical records to extract cancer details. Use ChartDetails to parse this data."},
-#             {"role": "user", "content": input},
-#         ],
-#     )
-
-#     cancer_details = ChartDetails.from_response(completion)
-#     return cancer_details
-
-def old_method3(string, model="gpt-3.5-turbo", output = "json") -> NeurologicDiagnosis:
+def old_method3(string, model="gpt-3.5-turbo", output = "json") -> OncologyDiagnosis:
     client = OpenAI(api_key = st.secrets["OPENAI_API_KEY"])
-    client = instructor.patch(OpenAI())
     response=  client.chat.completions.create(
       model=model,
-      response_model=NeurologicDiagnosis,
+      response_model=OncologyDiagnosis,
       messages=[
           {
               "role": "user",
@@ -65,7 +46,7 @@ def old_method3(string, model="gpt-3.5-turbo", output = "json") -> NeurologicDia
     return json.dumps(response.dict(), indent=2)
   
   
-def method3(string, model="gpt-3.5-turbo", output = "json") -> NeurologicDiagnosis:
+def method3(string, model="gpt-3.5-turbo", output = "json") -> OncologyDiagnosis:
     client = OpenAI(api_key = st.secrets["OPENAI_API_KEY"])
     response=  client.chat.completions.create(
       model=model,
@@ -77,14 +58,7 @@ def method3(string, model="gpt-3.5-turbo", output = "json") -> NeurologicDiagnos
           },
       ],
   )  # type: ignore
-    # return json.dumps(response.dict(), indent=2)
     return response.choices[0].message.content
-    
-if "openai_api_key" not in st.session_state:
-    st.session_state.openai_api_key = ''
-    
-if "text_input" not in st.session_state:
-    st.session_state.text_input = ''
 
 def is_valid_api_key(api_key):
     openai.api_key = api_key
@@ -230,20 +204,26 @@ default_schema = {
       },
       "required": ["patientID", "dateOfBirth", "gender"]
     },
-    "neurologicalDiagnosis": {
+    "cancerDiagnosis": {
       "type": "object",
       "properties": {
         "diagnosisDate": {
           "type": "string",
           "format": "date"
         },
-        "neurologicalCondition": {
+        "cancerType": {
           "type": "string"
         },
-        "severity": {
+        "cancerStage": {
           "type": "string"
         },
-        "affectedRegions": {
+        "histologicalGrade": {
+          "type": "string"
+        },
+        "primarySite": {
+          "type": "string"
+        },
+        "metastasisSites": {
           "type": "string"
         },
         "symptoms": {
@@ -255,11 +235,11 @@ default_schema = {
         "laboratoryResults": {
           "type": "string"
         },
-        "geneticMutations": {
+        "molecularMarkers": {
           "type": "string"
         }
       },
-      "required": ["diagnosisDate", "neurologicalCondition", "severity", "affectedRegions", "symptoms"]
+      "required": ["diagnosisDate", "cancerType", "cancerStage", "primarySite", "symptoms"]
     },
     "treatmentInformation": {
       "type": "object",
@@ -281,13 +261,22 @@ default_schema = {
         "sideEffects": {
           "type": "string"
         },
-        "medications": {
+        "chemotherapy": {
           "type": "string"
         },
-        "surgeries": {
+        "radiationTherapy": {
           "type": "string"
         },
-        "rehabilitationTherapy": {
+        "surgery": {
+          "type": "string"
+        },
+        "targetedTherapy": {
+          "type": "string"
+        },
+        "immunotherapy": {
+          "type": "string"
+        },
+        "clinicalTrialEnrollment": {
           "type": "string"
         }
       },
@@ -300,26 +289,29 @@ default_schema = {
           "type": "string",
           "format": "date"
         },
-        "currentStatus": {
+        "diseaseStatus": {
           "type": "string"
         },
         "progressionInformation": {
           "type": "string"
         },
-        "functionalStatus": {
+        "performanceStatus": {
           "type": "string"
         },
-        "cognitiveStatus": {
+        "toxicityAssessment": {
           "type": "string"
         },
-        "neurologicalExamFindings": {
+        "cancerRelatedSymptoms": {
+          "type": "string"
+        },
+        "qualityOfLife": {
           "type": "string"
         }
       },
-      "required": ["lastFollowUpDate", "currentStatus", "functionalStatus", "cognitiveStatus"]
+      "required": ["lastFollowUpDate", "diseaseStatus", "performanceStatus"]
     }
   },
-  "required": ["patientInformation", "neurologicalDiagnosis", "treatmentInformation", "followUpInformation"]
+  "required": ["patientInformation", "cancerDiagnosis", "treatmentInformation", "followUpInformation"]
 }
 
    
@@ -341,25 +333,25 @@ schema2 = {
     "properties": {
         "patient_last_name": {"type": "string"},
         "patient_first_name": {"type": "string"},
-        "age_at_neurological_diagnosis": {"type": "integer"},
-        "age_at_neurological_recurrence": {"type": "integer"},
+        "age_at_cancer_diagnosis": {"type": "integer"},
+        "age_at_cancer_recurrence": {"type": "integer"},
         "age_at_visit": {"type": "integer"},
-        "specific_neurological_condition": {"type": "string"},
-        "severity_at_diagnosis": {"type": "string"},
-        "neurological_treatment_history": {"type": "string"},
-        "neurological_treatment_current": {"type": "string"},
-        "neurological_recurrence_status": {"type": "string"},
-        "neurological_recurrence_date": {"type": "string"},
-        "neurological_recurrence_treatment": {"type": "string"},
-        "neurological_current_status": {"type": "string"},
-        "neurological_current_status_date": {"type": "string"},
-        "neurological_current_status_details": {"type": "string"},
-        "neurological_symptoms": {"type": "string"},
-        "neurological_exam_findings": {"type": "string"},
+        "specific_cancer_type": {"type": "string"},
+        "cancer_stage_at_diagnosis": {"type": "string"},
+        "cancer_treatment_history": {"type": "string"},
+        "cancer_treatment_current": {"type": "string"},
+        "cancer_recurrence_status": {"type": "string"},
+        "cancer_recurrence_date": {"type": "string"},
+        "cancer_recurrence_treatment": {"type": "string"},
+        "cancer_current_status": {"type": "string"},
+        "cancer_current_status_date": {"type": "string"},
+        "cancer_current_status_details": {"type": "string"},
+        "cancer_symptoms": {"type": "string"},
+        "performance_status": {"type": "string"},
         "imaging_findings": {"type": "string"},
         "laboratory_results": {"type": "string"},
-        "functional_status": {"type": "string"},
-        "cognitive_status": {"type": "string"},
+        "comorbidities": {"type": "string"},
+        "quality_of_life": {"type": "string"},
     },
     "required": ["patient_last_name", "patient_first_name"],
 }
@@ -370,31 +362,34 @@ schema3 = {
         "patient_age": {"type": "integer"},
         "patient_sex": {"type": "string"},
         "race": {"type": "string"},
-        "neurological_condition": {"type": "string"},
-        "affected_hemisphere": {"type": "string"},
-        "specific_diagnosis": {"type": "string"},
-        "icd_code": {"type": "string"},
-        "severity": {"type": "string"},
-        "diagnosis_confirmation": {"type": "string"},
+        "cancer_type": {"type": "string"},
+        "cancer_stage": {"type": "string"},
+        "histology": {"type": "string"},
+        "tumor_grade": {"type": "string"},
+        "primary_site": {"type": "string"},
+        "metastasis_sites": {"type": "string"},
         "diagnosis_date": {"type": "string"},  # ISO date format (yyyy-mm-dd) is recommended
-        "episode_number": {"type": "string"},
-        "lesion_size": {"type": "integer"},
-        "lesion_location": {"type": "string"},
-        "neurological_symptoms": {"type": "string"},
-        "prognostic_factors": {"type": "string"},
+        "diagnosis_method": {"type": "string"},
+        "biomarkers": {"type": "string"},
+        "genetic_mutations": {"type": "string"},
+        "symptoms": {"type": "string"},
         "comorbidities": {"type": "string"},
         "surgery": {"type": "string"},
-        "deep_brain_stimulation": {"type": "string"},
+        "chemotherapy": {"type": "string"},
+        "radiation_therapy": {"type": "string"},
+        "immunotherapy": {"type": "string"},
+        "targeted_therapy": {"type": "string"},
+        "hormone_therapy": {"type": "string"},
         "treatment_start_date": {"type": "string"},  # ISO date format (yyyy-mm-dd) is recommended
         "treatment_end_date": {"type": "string"},  # ISO date format (yyyy-mm-dd) is recommended
-        "physical_therapy": {"type": "string"},
-        "occupational_therapy": {"type": "string"},
-        "speech_therapy": {"type": "string"},
-        "medications": {"type": "string"},
-        "assistive_devices": {"type": "string"},
-        "diagnostic_tests": {"type": "string"},
+        "treatment_response": {"type": "string"},
+        "adverse_events": {"type": "string"},
+        "supportive_care": {"type": "string"},
+        "palliative_care": {"type": "string"},
+        "clinical_trials": {"type": "string"},
+        "follow_up_plan": {"type": "string"},
         "patient_follow_up_duration": {"type": "integer"},
-        "neurological_status_at_last_followup": {"type": "string"},
+        "disease_status_at_last_followup": {"type": "string"},
         "last_followup_date": {"type": "string"},  # ISO date format (yyyy-mm-dd) is recommended
         "cause_of_death": {"type": "string"},
         "tobacco_history": {"type": "string"},
@@ -419,14 +414,15 @@ if st.secrets["use_docker"] == "True" or check_password():
     # API_O = st.secrets["OPENAI_API_KEY"]
     # Define Streamlit app layout
 
-    st.set_page_config(page_title='Neurology Parser Assistant', layout = 'centered', page_icon = ':stethoscope:', initial_sidebar_state = 'auto')
-    st.title("📝 Neurology Parser Assistant")
+
+    st.set_page_config(page_title='Oncology Parser Assistant', layout = 'centered', page_icon = ':stethoscope:', initial_sidebar_state = 'auto')
+    st.title("📝 Oncology Parser Assistant")
     st.warning("""Who likes extra EHR clicks? What if AI could recognize all concepts and file them where they belong in the chart? This tool illustrates
-               progress in that direction with a variety of methods. Soon, one or more will meet muster for research or clinical use!""")
+                  progress in that direction with a variety of methods. Soon, one or more will meet muster for research or clinical use!""")
     disclaimer = """**Disclaimer:** This is a tool to assist chart abstraction for cancer related diagnoses. \n 
-2. This tool is not a real doctor. \n    
-3. You will not take any medical action based on the output of this tool. \n   
-    """
+    2. This tool is not a real doctor. \n    
+    3. You will not take any medical action based on the output of this tool. \n   
+        """
     openai_api_key = fetch_api_key()
     openai.api_key = openai_api_key
     with st.expander('About Neurology Parser - Important Disclaimer'):
@@ -445,7 +441,7 @@ if st.secrets["use_docker"] == "True" or check_password():
     # st.info("📚 Let AI identify structured content from notes!" )
         
 
-    schema_choice = st.sidebar.radio("Pick your extraction schema:", ("Schema 1", "Schema 2", "Schema 3", "Method 2", "Method 3"))
+    schema_choice = st.sidebar.radio("Pick your extraction schema:", ("Schema 1", "Schema 2", "Schema 3", "Method 2: Consistent JSON"))
     # st.markdown('[Sample Oncology Notes](https://www.medicaltranscriptionsamplereports.com/hepatocellular-carcinoma-discharge-summary-sample/)')
     parse_prompt  = """You will be provided with unstructured text about a patient, and your task is to find all information related to any cancer 
     and reformat for quick understanding by readers. If data is available, complete all fields shown below. Leave blank otherwise.  extract cancer diagnosis date, any recurrence dates, all treatments given and current plan. 
@@ -495,7 +491,7 @@ if st.secrets["use_docker"] == "True" or check_password():
     elif schema_choice == "Schema 3":
         schema = schema3
         # st.sidebar.json(schema3)
-    elif schema_choice == "Method 3":
+    elif schema_choice == "Method 2: Consistent JSON":
         output_choice = "JSON"
     # # elif schema_choice == "Method 2":
     #     response = openai.ChatCompletion.create(
@@ -514,7 +510,7 @@ if st.secrets["use_docker"] == "True" or check_password():
 
     
     if schema_choice != "Method 2":
-      if schema_choice != "Method 3":
+      if schema_choice != "Method 2: Consistent JSON":
         llm = ChatOpenAI(temperature=0, model=model, verbose = True)
         chain = create_extraction_chain(schema, llm)
         
@@ -523,8 +519,8 @@ if st.secrets["use_docker"] == "True" or check_password():
     
     if test_or_use == "Generate a note":
       
-      neurology_diagnosis = st.text_input("Enter a neurologic diagnosis and any other details", placeholder = "e.g., 45F with multiple sclerosis", key = 'neurology_diagnosis',)
-      sample_prompt = f"{neurology_note} and here is the neurology diagnosis: {neurology_diagnosis}"
+      oncology_diagnosis = st.text_input("Enter an oncologic diagnosis and any other details", placeholder = "e.g., 45F with breast cancer", key = 'oncology_diagnosis',)
+      sample_prompt = f"{oncology_note} and here is the oncology diagnosis: {oncology_diagnosis}"
       if st.button("Generate a sample note"):
         prelim_note = answer_using_prefix(prefix, sample_prompt, sample_response, sample_prompt, temperature = 0.4, history_context = "", )
         st.session_state.copied_note = prelim_note
@@ -545,7 +541,7 @@ if st.secrets["use_docker"] == "True" or check_password():
         #     with col2:
         #         st.markdown(extracted_data)
                 
-        if schema_choice == "Method 3":
+        if schema_choice == "Method 2: Consistent JSON":
             openai_api_key = fetch_api_key()
             st.write(st.session_state.copied_note)
             extracted_data = method3(st.session_state.copied_note, model, output_choice)

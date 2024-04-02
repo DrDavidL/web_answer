@@ -55,25 +55,23 @@ with st.expander("ℹ️ About this App and Settings"):
     
 with st.sidebar:
     model = st.selectbox("Select a model:", ["gpt-3.5-turbo", "gpt-4-turbo-preview"])
-    # with st.expander("Parkinson's Disease Sources"):
-    #     st.markdown(references_used)
+
+    # Reenable in order to create another vectorstore!    
     
 
 # Get user input
 
-st.warning("""This app uses pre-processed content from the NLM Bookshelf. The purpose here is to illustrate grounding answers
-           in reliable sources through Retrieval Augmented Generation (RAG). Processed content is stored in vector database and used when crafting a response. Sources are listed on the left. 
+st.warning("""This app leverages USPSTF content for an information basis. The purpose here is to illustrate grounding answers
+           in reliable sources through Retrieval Augmented Generation (RAG). Processed content is stored in vector database and used when crafting a response. 
            The response will indicate if the reference material available fails to answer the question. """)
 
 if st.secrets["use_docker"] == "True" or check_password2():
-    topic = st.radio("Select a topic:", ["Colon Cancer Screening", "ACP Suggested Content to Include in Referrals"], horizontal=True)
+    topic = st.radio("Select a topic:", ["Colon Cancer Screening", "Pending - if time pre conference"], horizontal=True)
     if topic == "Colon Cancer Screening":
         vectorstore_label = "colon_ca.faiss"
         question_placeholder = "Why should a patient have a colon cancer screening?"
-    elif topic == "ACP Suggested Content to Include in Referrals":
-        st.sidebar.markdown("[ACP Referral Guidelines](https://www.acponline.org/clinical-information/high-value-care/resources-for-clinicians/high-value-care-coordination-hvcc-toolkit/pertinent-data-sets)")
-        vectorstore_label = "neuro_assess.faiss"
-        question_placeholder = "What content should be included in a referral for headache?"
+    elif topic == "Pending - if time pre conference":
+        st.warning("Not implemented yet")
     st_callback = StreamlitCallbackHandler(st.container())
     with st.spinner("Preparing Databases..."):
         llm = ChatOpenAI(openai_api_key=st.secrets['OPENAI_API_KEY'], 
@@ -96,11 +94,11 @@ if st.secrets["use_docker"] == "True" or check_password2():
     # Create the question-answering chain
     qa_chain = RetrievalQA.from_chain_type(llm=llm, retriever=vectorstore.as_retriever(), chain_type="stuff", callbacks=[st_callback],)
 
-    user_role = st.radio("What is your role?", ["Patient", "Neurologist", "Other"], horizontal=True)
+    user_role = st.radio("What is your role?", ["Patient", "Oncologist", "Other"], horizontal=True)
     if user_role == "Other":
         user_role = st.text_input("Enter your role:")
 
-    query = st.text_input(f"Ask a question, e.g., {question_placeholder}",)
+    query = st.text_input(f'Ask a question, e.g., "{question_placeholder}"',)
 
     final_query = f'{rag_prompt} As a {user_role}, so please use appropriate terms, {query}.'
 

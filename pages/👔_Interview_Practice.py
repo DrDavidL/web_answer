@@ -206,7 +206,7 @@ if check_password2() or st.secrets["use_docker"] == "True":
                of the page or choose the Microphone option (your Chrome tab should be unmuted and allow microphone access). This tool uses OpenAI's GPT3.5 turbo model.
                Development is underway for clinical scenarios. :) """)
     system_context = st.radio("Select an interviewer type :", ("Tough", "Nice",), horizontal = True, index=0)
-    specialty = st.text_input("Enter your sought specialty area", placeholder="e.g. Stroke Neurology")
+    specialty = st.text_input("Enter your sought specialty area", placeholder="e.g. Breast Oncology")
     position = st.text_input("Enter your sought position", placeholder="e.g. resident, faculty, administrator")
     
     
