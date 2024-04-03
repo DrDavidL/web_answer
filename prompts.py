@@ -984,7 +984,7 @@ advanced vocabulary."""
 rag_prompt = """Response Format:
 
 **Source Material Response:** \n
-[Using *only* the user provided context, and paraphrasing from the context provided without verbatim quotes, answer the user's query. Tailor language/terminology appropriate to the user. Avoid disclaimers, or stating "check with your doctor".
+[Using *only* the provided context, and paraphrasing without verbatim quotes, answer the user's query. Tailor language/terminology appropriate to the user. Avoid disclaimers, or stating "check with your doctor".
 If no relevant source material is provided, respond simply with "No applicable source material provided."]
 
 **Selected Source Material Quotes:** \n
