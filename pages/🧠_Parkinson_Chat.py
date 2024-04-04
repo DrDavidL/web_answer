@@ -11,7 +11,13 @@ from langchain_community.embeddings import OpenAIEmbeddings
 from prompts import rag_prompt, references_used
 from langchain.callbacks.streamlit import StreamlitCallbackHandler
 
+from menu import menu_with_redirect
 st.set_page_config(page_title='Neurology Chats', layout = 'centered', page_icon = "💬", initial_sidebar_state = 'auto')    
+
+
+# Redirect to app.py if not logged in, otherwise show the navigation menu
+menu_with_redirect()
+
 
 def check_password2():
     """Returns `True` if the user had the correct password."""

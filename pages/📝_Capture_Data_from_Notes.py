@@ -15,6 +15,13 @@ import json
 
 from pydantic import BaseModel, Field
 
+from menu import menu_with_redirect
+st.set_page_config(page_title='Neurology Parser Assistant', layout = 'centered', page_icon = ':stethoscope:', initial_sidebar_state = 'auto')
+
+
+# Redirect to app.py if not logged in, otherwise show the navigation menu
+menu_with_redirect()
+
 class NeurologicDiagnosis(BaseModel):
     last_name: str = Field(..., description="Patient's last name")
     first_name: str = Field(..., description="Patient's first name")
@@ -419,7 +426,6 @@ if st.secrets["use_docker"] == "True" or check_password():
     # API_O = st.secrets["OPENAI_API_KEY"]
     # Define Streamlit app layout
 
-    st.set_page_config(page_title='Neurology Parser Assistant', layout = 'centered', page_icon = ':stethoscope:', initial_sidebar_state = 'auto')
     st.title("📝 Neurology Parser Assistant")
     st.warning("""Who likes extra EHR clicks? What if AI could recognize all concepts and file them where they belong in the chart? This tool illustrates
                progress in that direction with a variety of methods. Soon, one or more will meet muster for research or clinical use!""")

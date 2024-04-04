@@ -8,6 +8,12 @@ from datetime import date
 import json
 import markdown2
 
+from menu import menu_with_redirect
+st.set_page_config(page_title="Prior Authorization Help", page_icon="✔")
+
+# Redirect to app.py if not logged in, otherwise show the navigation menu
+menu_with_redirect()
+
 #set default name and info, don't have them enter it 
 # don't need session state- done
 # could potentially download pdf (option), or can look at easy copy and pasting of an output
@@ -31,7 +37,7 @@ openai.api_key = api_key
 # Initialize the OpenAI client with your API key
 client = OpenAI(api_key=api_key)
 
-st.set_page_config(page_title="Prior Authorization Help", page_icon="✔")
+
 def ChatGPT(messages):
     # Ensure messages is a list
     if not isinstance(messages, list):

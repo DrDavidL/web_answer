@@ -10,6 +10,11 @@ from openai import OpenAI
 import time
 from using_docker import using_docker  
 
+from menu import menu_with_redirect
+st.set_page_config(page_title='Bias Checker', layout = 'centered', page_icon = '⚖️', initial_sidebar_state = 'auto')
+# Redirect to app.py if not logged in, otherwise show the navigation menu
+menu_with_redirect()
+
 def process_model_name(model):
     prefix = "openai/"
     if model.startswith(prefix):
@@ -227,7 +232,7 @@ if st.secrets["use_docker"] == "True" or check_password():
     # API_O = st.secrets["OPENAI_API_KEY"]
     # Define Streamlit app layout
 
-    st.set_page_config(page_title='Bias Checker', layout = 'centered', page_icon = '⚖️', initial_sidebar_state = 'auto')
+    
     st.title("⚖️Bias Generator and Checker")
     st.warning("Large language models know 'language' yet may be biased based on their training context. Here, we instead use models to shed light on the biases that may exist in our notes.")
     disclaimer = """**Disclaimer:** This is a early draft tool to identify chart note biases. \n 

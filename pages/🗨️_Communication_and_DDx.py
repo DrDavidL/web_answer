@@ -32,7 +32,12 @@ from prompts import *
 from using_docker import using_docker
 from functions import *
 
+from menu import menu_with_redirect
+st.set_page_config(page_title='🗨️Communication and DDX', layout = 'centered', page_icon = ':stethoscope:', initial_sidebar_state = 'auto')    
 
+
+# Redirect to app.py if not logged in, otherwise show the navigation menu
+menu_with_redirect()
 
 def create_download_link(val, filename):
     b64 = base64.b64encode(val)  # val looks like b'...'
@@ -1065,7 +1070,6 @@ if "skim_output_text" not in st.session_state:
 if "expanded" not in st.session_state:
     st.session_state["expanded"] = True
    
-st.set_page_config(page_title='🗨️Communication and DDX', layout = 'centered', page_icon = ':stethoscope:', initial_sidebar_state = 'auto')    
      
 st.title("🗨️Communication and DDx")
 st.warning("Please try the features on this tab and the Patient Ed and DDx tabs, too! This is a work in progress and we are interested in your feedback and perceived value now and in the future.")

@@ -20,9 +20,13 @@ import re
 # from elevenlabs import clone, generate, play, set_api_key, stream
 from using_docker import using_docker
 
-
-
+from menu import menu_with_redirect
 st.set_page_config(page_title="Interview Practice!", page_icon="🧐")
+
+# Redirect to app.py if not logged in, otherwise show the navigation menu
+menu_with_redirect()
+
+
 st.title("👔 Interview Practice")
 
 def talk_stream(model, voice, input):

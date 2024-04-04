@@ -28,9 +28,14 @@ from langchain.text_splitter import RecursiveCharacterTextSplitter
 from langchain_community.vectorstores import FAISS
 
 
-from prompts import *
+from ..prompts import *
 from using_docker import using_docker
 from functions import *
+
+from menu import menu_with_redirect
+
+# Redirect to app.py if not logged in, otherwise show the navigation menu
+menu_with_redirect()
 
 def check_password():
     """Returns `True` if the user had the correct password."""

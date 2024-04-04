@@ -17,9 +17,15 @@ from llama_index.core import Document
 # from st_copy_to_clipboard import st_copy_to_clipboard
 from ai_team_prompts import *
 import markdown2
+
+from menu import menu_with_redirect
+st.set_page_config(page_title='My AI Team', layout = 'centered', page_icon = ':stethoscope:', initial_sidebar_state = 'auto')
+
+
+# Redirect to app.py if not logged in, otherwise show the navigation menu
+menu_with_redirect()
  
 
-st.set_page_config(page_title='My AI Team', layout = 'centered', page_icon = ':stethoscope:', initial_sidebar_state = 'auto')
 
 
 @st.cache_data
