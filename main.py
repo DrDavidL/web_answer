@@ -34,15 +34,16 @@ from functions import *
 
 def check_pass_through():
     """Returns `True` if the user comes from a specific page or clicks a specific link."""
-    query_params = st.query_params()
-    
-    # Check if the 'ref' query parameter exists and matches the expected value
-    if 'ref' in query_params and query_params['ref'][0] == 'https://neuro-medimate.streamlit.app/testing.py':
+    if st.query_params.link == 'aan':
         return True
     
-    # Check if the 'link' query parameter exists and matches the expected value
-    if 'link' in query_params and query_params['link'][0] == 'special_link':
-        return True
+    # # Check if the 'ref' query parameter exists and matches the expected value
+    # if 'ref' in query_params and query_params['ref'][0] == 'https://neuro-medimate.streamlit.app/testing.py':
+    #     return True
+    
+    # # Check if the 'link' query parameter exists and matches the expected value
+    # if 'link' in query_params and query_params['link'][0] == 'special_link':
+    #     return True
     
     return False
 
