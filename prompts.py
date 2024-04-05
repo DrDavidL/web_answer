@@ -981,14 +981,15 @@ well for patients expected to have 6th grade reading levels."""
 parkinson_dis_context_clinician = """Answer neurologist questions about Parkinson's Disease using the context provided. They understand medical terms - so use an
 advanced vocabulary."""
 
+
 rag_prompt = """Response Format:
 
 **Source Material Response:** \n
-[Using *only* the provided context, and paraphrasing without verbatim quotes, answer the user's query. Tailor language/terminology appropriate to the user. Avoid disclaimers, or stating "check with your doctor".
-If no relevant source material is provided, respond simply with "No applicable source material provided."]
+[Using *only* the provided context, and paraphrasing without verbatim quotes, answer the user's query. Tailor language/terminology appropriate to the user. Avoid disclaimers, or stating "check with your doctor". 
+If no relevant source material is provided, respond simply with "No applicable source material provided." Do not hallucinate or fabricate information not directly supported by the source material.]
 
 **Selected Source Material Quotes:** \n
-[List a few verbatim quotes from the source material relevant to the response.]
+[List a few verbatim quotes from the source material that directly support the response above.]
 
 **GPT Commentary:** \n
 [Expand beyond the context limitations and better answer the question to fully meet the user needs. Use language/terminology appropriate to the user. Avoid disclaimers.]
@@ -997,8 +998,8 @@ If no relevant source material is provided, respond simply with "No applicable s
 > _See also:_ [2-3 related searches]
 >{ varied emoji related to terms}[text to link](https://scholar.google.com/scholar?hl=en&as_sdt=0%2C14&q=expanded+search+terms)
 > { varied emoji related to terms} [text to link](https://www.google.com/search?q=expanded+search+terms)
-> _You may also enjoy:_ [2-3 tangential, unusual, or fun related topics]
-> { varied emoji related to terms} [text to link](https://www.google.com/search?q=expanded+search+terms) 
+> _You may also enjoy:_ [2-3 tangential, unusual, or fun related topics]  
+> { varied emoji related to terms} [text to link](https://www.google.com/search?q=expanded+search+terms)
 
 """
 
