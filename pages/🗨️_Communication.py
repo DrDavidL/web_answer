@@ -1065,10 +1065,10 @@ if "skim_output_text" not in st.session_state:
 if "expanded" not in st.session_state:
     st.session_state["expanded"] = True
    
-st.set_page_config(page_title='🗨️Communication and DDX', layout = 'centered', page_icon = ':stethoscope:', initial_sidebar_state = 'auto')    
+st.set_page_config(page_title='🗨️Communication', layout = 'centered', page_icon = ':stethoscope:', initial_sidebar_state = 'auto')    
      
-st.title("🗨️Communication and DDx")
-st.warning("Please try the features on this tab and the Patient Ed and DDx tabs, too! This is a work in progress and we are interested in your feedback and perceived value now and in the future.")
+st.title("🗨️Communication")
+st.warning("Please try the features on this tab and the Patient Ed tab, too! Note - you may switch to GPT4 on the left sidebar! GPT4 is more expensive - so play with GPT3.5 and then try GPT4. This is a work in progress and we are interested in your feedback and perceived value now and in the future.")
 
 
     # st.info("With OpenAI announcement 11-6-2023, new model added: GPT-4-1106-preview. It's in beta and allows longer text inputs than GPT-4.")
@@ -1106,7 +1106,7 @@ if st.secrets["use_docker"] == "True" or check_password():
             st.markdown("[Information on Gryphe's Mythomax](https://huggingface.co/Gryphe/MythoMax-L2-13b)")
         if st.session_state.model == "meta-llama/codellama-34b-instruct":
             st.markdown("[Information on Meta's CodeLlama](https://huggingface.co/codellama/CodeLlama-34b-Instruct-hf)")
-    tab1, tab2, tab3= st.tabs(["Draft Communication", "Patient Education", "Differential Diagnosis", ])
+    tab1, tab2 = st.tabs(["Draft Communication", "Patient Education", ])
    
     
                     
@@ -1365,106 +1365,106 @@ if st.secrets["use_docker"] == "True" or check_password():
                         st.sidebar.markdown(html, unsafe_allow_html=True)        
             
             
-    with tab3:
+    # with tab3:
         
-        # st.subheader("Differential Diagnosis Tools")
+    #     # st.subheader("Differential Diagnosis Tools")
         
-        # st.info("Avoid premature closure and consider alternative diagnoses")
+    #     # st.info("Avoid premature closure and consider alternative diagnoses")
         
-        ddx_strategy = st.radio("Choose an approach for a differential diagnosis!", options=["Find Alternative Diagnoses to Consider","Provide Clinical Data"], index=0, key="ddx strategy")
+    #     ddx_strategy = st.radio("Choose an approach for a differential diagnosis!", options=["Find Alternative Diagnoses to Consider","Provide Clinical Data"], index=0, key="ddx strategy")
 
 
-        if ddx_strategy == "Provide Clinical Data":    
-            # st.title("Differential Diagnosis Generator")
-            st.write("Add as many details as possible to improve the response. The prompts do not request any unique details; however, *modify values and do not include dates to ensure privacy.")
+    #     if ddx_strategy == "Provide Clinical Data":    
+    #         # st.title("Differential Diagnosis Generator")
+    #         st.write("Add as many details as possible to improve the response. The prompts do not request any unique details; however, *modify values and do not include dates to ensure privacy.")
 
-            age = st.slider("Age", 0, 120, 50)
-            sex_at_birth = st.radio("Sex at Birth", options=["Female", "Male", "Other"], horizontal=True)
-            presenting_symptoms = st.text_input("Presenting Symptoms")
-            duration_of_symptoms = st.text_input("Duration of Symptoms")
-            past_medical_history = st.text_input("Past Medical History")
-            current_medications = st.text_input("Current Medications")
-            relevant_social_history = st.text_input("Relevant Social History")
-            physical_examination_findings = st.text_input("Physical Examination Findings")
-            lab_or_imaging_results = st.text_input("Any relevant Laboratory or Imaging results")
-            ddx_prompt = f"""
-            Patient Information:
-            - Age: {age}
-            - Sex: {sex_at_birth}
-            - Presenting Symptoms: {presenting_symptoms}
-            - Duration of Symptoms: {duration_of_symptoms}
-            - Past Medical History: {past_medical_history}
-            - Current Medications: {current_medications}
-            - Relevant Social History: {relevant_social_history}
-            - Physical Examination Findings: {physical_examination_findings}
-            - Any relevant Laboratory or Imaging results: {lab_or_imaging_results}
-            """
+    #         age = st.slider("Age", 0, 120, 50)
+    #         sex_at_birth = st.radio("Sex at Birth", options=["Female", "Male", "Other"], horizontal=True)
+    #         presenting_symptoms = st.text_input("Presenting Symptoms")
+    #         duration_of_symptoms = st.text_input("Duration of Symptoms")
+    #         past_medical_history = st.text_input("Past Medical History")
+    #         current_medications = st.text_input("Current Medications")
+    #         relevant_social_history = st.text_input("Relevant Social History")
+    #         physical_examination_findings = st.text_input("Physical Examination Findings")
+    #         lab_or_imaging_results = st.text_input("Any relevant Laboratory or Imaging results")
+    #         ddx_prompt = f"""
+    #         Patient Information:
+    #         - Age: {age}
+    #         - Sex: {sex_at_birth}
+    #         - Presenting Symptoms: {presenting_symptoms}
+    #         - Duration of Symptoms: {duration_of_symptoms}
+    #         - Past Medical History: {past_medical_history}
+    #         - Current Medications: {current_medications}
+    #         - Relevant Social History: {relevant_social_history}
+    #         - Physical Examination Findings: {physical_examination_findings}
+    #         - Any relevant Laboratory or Imaging results: {lab_or_imaging_results}
+    #         """
             
             
-            if st.button("Generate Differential Diagnosis"):
-                # Your differential diagnosis generation code goes here
-                if st.session_state.model == "openai/gpt-3.5-turbo" or st.session_state.model == "openai/gpt-4-turbo-preview":
-                    ddx_output_text = answer_using_prefix_openai(ddx_prefix, ddx_sample_question, ddx_sample_answer, ddx_prompt, temperature=0.3, history_context='')
-                    st.session_state.ddx_output_text = ddx_output_text
-                else:
-                    ddx_output_text = answer_using_prefix(ddx_prefix, ddx_sample_question, ddx_sample_answer, ddx_prompt, temperature=0.3, history_context='')
-                    st.session_state.ddx_output_text = ddx_output_text
-                # st.write("Differential Diagnosis will appear here...")
+    #         if st.button("Generate Differential Diagnosis"):
+    #             # Your differential diagnosis generation code goes here
+    #             if st.session_state.model == "openai/gpt-3.5-turbo" or st.session_state.model == "openai/gpt-4-turbo-preview":
+    #                 ddx_output_text = answer_using_prefix_openai(ddx_prefix, ddx_sample_question, ddx_sample_answer, ddx_prompt, temperature=0.3, history_context='')
+    #                 st.session_state.ddx_output_text = ddx_output_text
+    #             else:
+    #                 ddx_output_text = answer_using_prefix(ddx_prefix, ddx_sample_question, ddx_sample_answer, ddx_prompt, temperature=0.3, history_context='')
+    #                 st.session_state.ddx_output_text = ddx_output_text
+    #             # st.write("Differential Diagnosis will appear here...")
                 
-                # ddx_download_str = []
-            if st.session_state.ddx_output_text != "":    
-                with st.expander("Differential Diagnosis Draft", expanded=st.session_state.expanded):
-                    st.info(f'Topic: {ddx_prompt}',icon="🧐")
-                    st.success(f'Educational Use Only: **NOT REVIEWED FOR CLINICAL CARE** \n\n {st.session_state.ddx_output_text}', icon="🤖")                         
-                    ddx_download_str = f"{disclaimer}\n\nDifferential Diagnoses for {ddx_prompt}:\n\n{st.session_state.ddx_output_text}"
-                    if ddx_download_str:
-                        st.download_button('Download', ddx_download_str, key = 'ddx_questions_1')
-                        export_as_pdf = st.button("Create PDF version", key = "ddx_pdf")
-                        if export_as_pdf:
-                            st.session_state.expanded = True
-                            pdf = FPDF()
-                            pdf.add_page()
-                            pdf.set_font("Arial", size=12)
-                            pdf.multi_cell(0, 5, ddx_download_str)
-                            html = create_download_link(pdf.output(dest="S").encode("latin-1"), "ald_ddx")
-                            st.sidebar.info("Here is your PDF file to download!")
-                            st.sidebar.markdown(html, unsafe_allow_html=True)  
+    #             # ddx_download_str = []
+    #         if st.session_state.ddx_output_text != "":    
+    #             with st.expander("Differential Diagnosis Draft", expanded=st.session_state.expanded):
+    #                 st.info(f'Topic: {ddx_prompt}',icon="🧐")
+    #                 st.success(f'Educational Use Only: **NOT REVIEWED FOR CLINICAL CARE** \n\n {st.session_state.ddx_output_text}', icon="🤖")                         
+    #                 ddx_download_str = f"{disclaimer}\n\nDifferential Diagnoses for {ddx_prompt}:\n\n{st.session_state.ddx_output_text}"
+    #                 if ddx_download_str:
+    #                     st.download_button('Download', ddx_download_str, key = 'ddx_questions_1')
+    #                     export_as_pdf = st.button("Create PDF version", key = "ddx_pdf")
+    #                     if export_as_pdf:
+    #                         st.session_state.expanded = True
+    #                         pdf = FPDF()
+    #                         pdf.add_page()
+    #                         pdf.set_font("Arial", size=12)
+    #                         pdf.multi_cell(0, 5, ddx_download_str)
+    #                         html = create_download_link(pdf.output(dest="S").encode("latin-1"), "ald_ddx")
+    #                         st.sidebar.info("Here is your PDF file to download!")
+    #                         st.sidebar.markdown(html, unsafe_allow_html=True)  
                         
                         
-        # Alternative Diagnosis Generator
-        if ddx_strategy == "Find Alternative Diagnoses to Consider":
-            # st.subheader("Alternative Diagnosis Generator")
+    #     # Alternative Diagnosis Generator
+    #     if ddx_strategy == "Find Alternative Diagnoses to Consider":
+    #         # st.subheader("Alternative Diagnosis Generator")
             
-            alt_dx_prompt = st.text_input("Enter your presumed diagnosis.")
+    #         alt_dx_prompt = st.text_input("Enter your presumed diagnosis.")
 
-            if st.button("Generate Alternative Diagnoses"):
-                if st.session_state.model == "openai/gpt-3.5-turbo" or st.session_state.model == "openai/gpt-4-turbo-preview":
-                    alt_dx_output_text = answer_using_prefix_openai(alt_dx_prefix, alt_dx_sample_question, alt_dx_sample_answer, alt_dx_prompt, temperature=0.0, history_context='')
-                    st.session_state.alt_dx_output_text = alt_dx_output_text
-                else:
-                    alt_dx_output_text = answer_using_prefix(alt_dx_prefix, alt_dx_sample_question, alt_dx_sample_answer, alt_dx_prompt, temperature=0.0, history_context='')
-                    st.session_state.alt_dx_output_text = alt_dx_output_text
-                if st.session_state.model == "google/palm-2-chat-bison":
-                    st.write("Alternative Diagnoses:", alt_dx_output_text)
-                    st.session_state.alt_dx_output_text = alt_dx_output_text
-                # alt_dx_download_str = []
-            if st.session_state.alt_dx_output_text != "":
-                with st.expander("Alternative Diagnoses Draft", expanded=st.session_state.expanded):
-                    st.info(f'Topic: {alt_dx_prompt}',icon="🧐")
-                    st.success(f'Educational Use Only: **NOT REVIEWED FOR CLINICAL CARE** \n\n {st.session_state.alt_dx_output_text}', icon="🤖")
-                    alt_dx_download_str = f"{disclaimer}\n\nAlternative Diagnoses for {alt_dx_prompt}:\n\n{st.session_state.alt_dx_output_text}"
-                    if alt_dx_download_str:
-                        st.download_button('Download', alt_dx_download_str, key = 'alt_dx_output')
-                        export_as_pdf = st.button("Create PDF version", key = "alt_dx_output_pdf")
-                        if export_as_pdf:
-                            st.session_state.expanded = True
-                            pdf = FPDF()
-                            pdf.add_page()
-                            pdf.set_font("Arial", size=12)
-                            pdf.multi_cell(0, 5, alt_dx_download_str)
-                            html = create_download_link(pdf.output(dest="S").encode("latin-1"), "ald_ddx")
-                            st.sidebar.info("Here is your PDF file to download!")
-                            st.sidebar.markdown(html, unsafe_allow_html=True)  
+    #         if st.button("Generate Alternative Diagnoses"):
+    #             if st.session_state.model == "openai/gpt-3.5-turbo" or st.session_state.model == "openai/gpt-4-turbo-preview":
+    #                 alt_dx_output_text = answer_using_prefix_openai(alt_dx_prefix, alt_dx_sample_question, alt_dx_sample_answer, alt_dx_prompt, temperature=0.0, history_context='')
+    #                 st.session_state.alt_dx_output_text = alt_dx_output_text
+    #             else:
+    #                 alt_dx_output_text = answer_using_prefix(alt_dx_prefix, alt_dx_sample_question, alt_dx_sample_answer, alt_dx_prompt, temperature=0.0, history_context='')
+    #                 st.session_state.alt_dx_output_text = alt_dx_output_text
+    #             if st.session_state.model == "google/palm-2-chat-bison":
+    #                 st.write("Alternative Diagnoses:", alt_dx_output_text)
+    #                 st.session_state.alt_dx_output_text = alt_dx_output_text
+    #             # alt_dx_download_str = []
+    #         if st.session_state.alt_dx_output_text != "":
+    #             with st.expander("Alternative Diagnoses Draft", expanded=st.session_state.expanded):
+    #                 st.info(f'Topic: {alt_dx_prompt}',icon="🧐")
+    #                 st.success(f'Educational Use Only: **NOT REVIEWED FOR CLINICAL CARE** \n\n {st.session_state.alt_dx_output_text}', icon="🤖")
+    #                 alt_dx_download_str = f"{disclaimer}\n\nAlternative Diagnoses for {alt_dx_prompt}:\n\n{st.session_state.alt_dx_output_text}"
+    #                 if alt_dx_download_str:
+    #                     st.download_button('Download', alt_dx_download_str, key = 'alt_dx_output')
+    #                     export_as_pdf = st.button("Create PDF version", key = "alt_dx_output_pdf")
+    #                     if export_as_pdf:
+    #                         st.session_state.expanded = True
+    #                         pdf = FPDF()
+    #                         pdf.add_page()
+    #                         pdf.set_font("Arial", size=12)
+    #                         pdf.multi_cell(0, 5, alt_dx_download_str)
+    #                         html = create_download_link(pdf.output(dest="S").encode("latin-1"), "ald_ddx")
+    #                         st.sidebar.info("Here is your PDF file to download!")
+    #                         st.sidebar.markdown(html, unsafe_allow_html=True)  
 
     with tab2:
 
