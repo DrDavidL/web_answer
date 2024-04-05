@@ -83,6 +83,8 @@ def check_password():
    
 st.set_page_config(page_title='AAN feedback for AI Tools', layout = 'centered', page_icon = ':stethoscope:', initial_sidebar_state = 'auto')    
 
+st.write(check_pass_through())
+
 if check_pass_through() or check_password() or using_docker == True:
 
     title1, title2 = st.columns([1, 3])
