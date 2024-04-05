@@ -51,7 +51,8 @@ def check_password2():
 # Streamlit app
 st.title("\"Reliable\" Content Chat Example")
 with st.expander("ℹ️ About this App and Settings"):
-    st.warning("Validate all responses - this is for exploration of AI at the NCCN meeting.")
+    st.warning("""Validate all responses - this is for exploration of AI at the NCCN meeting. Grounding methods are improving beyond
+               standard RAG, so ensure independent validation.""")
     st.write("Author: David Liebovitz, MD")
     
 with st.sidebar:
