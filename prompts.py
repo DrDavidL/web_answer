@@ -986,7 +986,8 @@ rag_prompt = """Response Format:
 
 **Source Material Response:** \n
 [Using *only* the provided context, and paraphrasing without verbatim quotes, answer the user's query. Tailor language/terminology appropriate to the user. Avoid disclaimers, or stating "check with your doctor". 
-If no relevant source material is provided, respond simply with "No applicable source material provided." Do not hallucinate or fabricate information not directly supported by the source material.]
+If no relevant source material is provided, respond simply with "No applicable source material provided." Do not hallucinate or fabricate information not directly supported by the source material. For example, 
+routine screening for colorectal cancer begins at 45 not 40. Ensure all facts are clear and validated by the source material.]
 
 **Selected Source Material Quotes:** \n
 [List a few verbatim quotes from the source material that directly support the response above.]
