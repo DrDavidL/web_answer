@@ -1066,6 +1066,7 @@ if "expanded" not in st.session_state:
     st.session_state["expanded"] = True
    
 st.set_page_config(page_title='🗨️Communication and DDX', layout = 'centered', page_icon = ':stethoscope:', initial_sidebar_state = 'auto')    
+st.sidebar.markdown("### When finished trying various features, please    complete a [post-survey](https://nam04.safelinks.protection.outlook.com/?url=https%3A%2F%2Fnorthwestern.az1.qualtrics.com%2Fjfe%2Fform%2FSV_1WUkLabZFI8HdfE&data=05%7C02%7Cdavid.liebovitz%40nm.org%7C60ff56cac8584a3f2e8a08dc5507dbb0%7C2596038f3ea44f0caed1066eb6544c3b%7C0%7C0%7C638478739455911762%7CUnknown%7CTWFpbGZsb3d8eyJWIjoiMC4wLjAwMDAiLCJQIjoiV2luMzIiLCJBTiI6Ik1haWwiLCJXVCI6Mn0%3D%7C0%7C%7C%7C&sdata=iKpW%2BHxBIqlkCDhrjifFkPsyZWqkfUmXmKeVJ1nH6Gg%3D&reserved=0)! Thank you so much in advance!!")
      
 st.title("🗨️Communication and DDx")
 st.warning("Please try the features on this tab and the Patient Ed and DDx tabs, too! This is a work in progress and we are interested in your feedback and perceived value now and in the future.")

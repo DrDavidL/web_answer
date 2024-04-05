@@ -32,6 +32,8 @@ openai.api_key = api_key
 client = OpenAI(api_key=api_key)
 
 st.set_page_config(page_title="Prior Authorization Help", page_icon="✔")
+st.sidebar.markdown("### When finished trying various features, please    complete a [post-survey](https://nam04.safelinks.protection.outlook.com/?url=https%3A%2F%2Fnorthwestern.az1.qualtrics.com%2Fjfe%2Fform%2FSV_1WUkLabZFI8HdfE&data=05%7C02%7Cdavid.liebovitz%40nm.org%7C60ff56cac8584a3f2e8a08dc5507dbb0%7C2596038f3ea44f0caed1066eb6544c3b%7C0%7C0%7C638478739455911762%7CUnknown%7CTWFpbGZsb3d8eyJWIjoiMC4wLjAwMDAiLCJQIjoiV2luMzIiLCJBTiI6Ik1haWwiLCJXVCI6Mn0%3D%7C0%7C%7C%7C&sdata=iKpW%2BHxBIqlkCDhrjifFkPsyZWqkfUmXmKeVJ1nH6Gg%3D&reserved=0)! Thank you so much in advance!!")
+
 def ChatGPT(messages):
     # Ensure messages is a list
     if not isinstance(messages, list):

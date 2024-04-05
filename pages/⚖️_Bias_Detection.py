@@ -229,6 +229,8 @@ if st.secrets["use_docker"] == "True" or check_password():
 
     st.set_page_config(page_title='Bias Checker', layout = 'centered', page_icon = '⚖️', initial_sidebar_state = 'auto')
     st.title("⚖️Bias Generator and Checker")
+    st.sidebar.markdown("### After trying various features, please complete a [post-survey](https://nam04.safelinks.protection.outlook.com/?url=https%3A%2F%2Fnorthwestern.az1.qualtrics.com%2Fjfe%2Fform%2FSV_1WUkLabZFI8HdfE&data=05%7C02%7Cdavid.liebovitz%40nm.org%7C60ff56cac8584a3f2e8a08dc5507dbb0%7C2596038f3ea44f0caed1066eb6544c3b%7C0%7C0%7C638478739455911762%7CUnknown%7CTWFpbGZsb3d8eyJWIjoiMC4wLjAwMDAiLCJQIjoiV2luMzIiLCJBTiI6Ik1haWwiLCJXVCI6Mn0%3D%7C0%7C%7C%7C&sdata=iKpW%2BHxBIqlkCDhrjifFkPsyZWqkfUmXmKeVJ1nH6Gg%3D&reserved=0)! Thank you so much in advance!!")
+    
     st.warning("Large language models know 'language' yet may be biased based on their training context. Here, we instead use models to shed light on the biases that may exist in our notes.")
     disclaimer = """**Disclaimer:** This is a early draft tool to identify chart note biases. \n 
 2. This tool is not a real doctor. \n    
