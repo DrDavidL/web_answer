@@ -65,7 +65,7 @@ with st.sidebar:
 
 st.warning("""This app leverages USPSTF content for an information basis. The purpose here is to illustrate grounding answers
            in reliable sources through Retrieval Augmented Generation (RAG). Processed content is stored in vector database and used when crafting a response. 
-           The response will indicate if the reference material available fails to answer the question. """)
+           The response will indicate if the reference material available fails to answer the question. Validate all responses - this is for exploration of AI at the NCCN meeting. Grounding methods are improving beyond standard RAG, so ensure independent validation.""")
 
 if st.secrets["use_docker"] == "True" or check_password2():
     topic = st.radio("Select a topic:", ["Colon Cancer Screening", "Pending - if time pre conference"], horizontal=True)
