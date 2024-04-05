@@ -107,18 +107,18 @@ if check_pass_through() or check_password() or using_docker == True:
             st.write("ALPHA version 1.0")
         # st.info("With OpenAI announcement 11-6-2023, new model added: GPT-4-1106-preview. It's in beta and allows longer text inputs than GPT-4.")
 
-    if st.secrets["use_docker"] == "True" or check_password():
-        st.warning("""Thank you for trying out our various use cases! Large language models (LLMs) hallucinate. This is particularly a concern in any healthcare context. Here, early methods
-            to mitigate this are used including [CoVE](https://arxiv.org/abs/2309.11495) and grounding the final output with web content from reliable sites.
-            Explore the links listed in the sidebar and copied below for easier phone use.""")
-        col1, col2, col3 = st.columns(3)
+    # if st.secrets["use_docker"] == "True" or check_password():
+    st.warning("""Thank you for trying out our various use cases! Large language models (LLMs) hallucinate. This is particularly a concern in any healthcare context. Here, early methods
+        to mitigate this are used including [CoVE](https://arxiv.org/abs/2309.11495) and grounding the final output with web content from reliable sites.
+        Explore the links listed in the sidebar and copied below for easier phone use.""")
+    col1, col2, col3 = st.columns(3)
 
-        with col2:
-            st.page_link("pages/🧠_Parkinson_Chat.py", label= "Reliable Chat", icon = "🧠")
-            # st.page_link("pages/🧐_Interview_Practice.py", label = "Interview Practice", icon = "🧐")
-            st.page_link("pages/🗨️_Communication.py", label = "Communication", icon = "🗨️")
-            st.page_link("pages/👔_Interview_Practice.py", label = "Interview Practice", icon = "👔")
-            st.page_link("pages/👩🏾‍💻_My_AI_Team.py", label = "My AI Team", icon = "👩🏾‍💻")
-            st.page_link("pages/⚖️_Bias_Detection.py", label = "Bias Detection", icon = "⚖️")
-            st.page_link("pages/✔_Prior_Authorization_Help.py", label = "Prior Authorization Help", icon = "✔")
-            st.page_link("pages/📝_Capture_Data_from_Notes.py", label = "Capture Data From Notes", icon = "📝")
+    with col2:
+        st.page_link("pages/🧠_Parkinson_Chat.py", label= "Reliable Chat", icon = "🧠")
+        # st.page_link("pages/🧐_Interview_Practice.py", label = "Interview Practice", icon = "🧐")
+        st.page_link("pages/🗨️_Communication.py", label = "Communication", icon = "🗨️")
+        st.page_link("pages/👔_Interview_Practice.py", label = "Interview Practice", icon = "👔")
+        st.page_link("pages/👩🏾‍💻_My_AI_Team.py", label = "My AI Team", icon = "👩🏾‍💻")
+        st.page_link("pages/⚖️_Bias_Detection.py", label = "Bias Detection", icon = "⚖️")
+        st.page_link("pages/✔_Prior_Authorization_Help.py", label = "Prior Authorization Help", icon = "✔")
+        st.page_link("pages/📝_Capture_Data_from_Notes.py", label = "Capture Data From Notes", icon = "📝")
