@@ -34,7 +34,7 @@ from functions import *
 
 def check_pass_through():
     """Returns `True` if the user comes from a specific page or clicks a specific link."""
-    if st.query_params.link == 'aan':
+    if "link" in st.query_params and st.query_params.link == 'aan':
         return True
     
     # # Check if the 'ref' query parameter exists and matches the expected value
