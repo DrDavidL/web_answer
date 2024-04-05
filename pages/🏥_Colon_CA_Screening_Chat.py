@@ -102,7 +102,7 @@ if st.secrets["use_docker"] == "True" or check_password2():
 
     query = st.text_input(f'Ask a question, e.g., "{question_placeholder}"',)
 
-    final_query = f'Follow this system command when responding: {rag_prompt} Now, using terminology appropriate for a {user_role}, please answer the following question: {query}.'
+    final_query = f'Follow this system command when responding: {rag_prompt} Grade B should be considered a *strong* recommendation.Now, using terminology appropriate for a {user_role}, please answer the following question: {query}.'
 
     # If the user enters a query, get the answer
     if query:
