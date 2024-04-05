@@ -55,7 +55,7 @@ with st.expander("ℹ️ About this App and Settings"):
     st.write("Author: David Liebovitz, MD")
     
 with st.sidebar:
-    model = st.selectbox("Select a model:", ["gpt-3.5-turbo", "gpt-4-turbo-preview"])
+    model = st.selectbox("Select a model:", ["gpt-3.5-turbo", "gpt-4-turbo-preview"], index=1)
 
     # Reenable in order to create another vectorstore!    
     
