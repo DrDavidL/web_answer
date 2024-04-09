@@ -447,7 +447,7 @@ if st.secrets["use_docker"] == "True" or check_password():
     # st.info("📚 Let AI identify structured content from notes!" )
         
 
-    schema_choice = st.sidebar.radio("Pick your extraction schema. The note will be scrutinized and parsed based on the selected schema.", ("Schema 1", "Schema 2", "Schema 3",  "Schema 4"))
+    schema_choice = st.sidebar.radio("Pick an extraction scheme.  Each of below is a different “template” or “methodology” of expected discrete data to extract.  These are for educational purposes only and do not represent any official data dictionary, but could be adapted as such.", ("Schema 1", "Schema 2", "Schema 3",  "Schema 4"))
     # st.markdown('[Sample Oncology Notes](https://www.medicaltranscriptionsamplereports.com/hepatocellular-carcinoma-discharge-summary-sample/)')
     parse_prompt  = """You will be provided with unstructured text about a patient, and your task is to find all information related to any cancer 
     and reformat for quick understanding by readers. If data is available, complete all fields shown below. Leave blank otherwise.  extract cancer diagnosis date, any recurrence dates, all treatments given and current plan. 
