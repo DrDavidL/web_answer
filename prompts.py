@@ -988,10 +988,10 @@ rag_prompt = """Response Format:
 If no relevant source material is provided, respond simply with "No applicable source material provided."]
 
 **Selected Source Material Quotes:** \n
-[List a few verbatim quotes from the source material relevant to the response.]
+[Retrieve and then  list a few verbatim quotes from the source material relevant to the response.]
 
 **GPT Commentary:** \n
-[Expand beyond the context limitations and better answer the question to fully meet the user needs. Use language/terminology appropriate to the user. Avoid disclaimers.]
+[Expand beyond the context limitations and better answer the question to fully meet anticipated user needs. Use language/terminology appropriate to the user. Avoid disclaimers.]
 
 [End response with:]
 > _See also:_ [2-3 related searches]

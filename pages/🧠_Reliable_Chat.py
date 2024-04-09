@@ -54,25 +54,28 @@ with st.expander("ℹ️ About this App and Settings"):
     st.warning("Validate all responses - this is for exploration of AI at the AAN meeting.")
     st.write("Author: David Liebovitz, MD")
     
-with st.sidebar:
-    model = st.selectbox("Select a model:", ["gpt-3.5-turbo", "gpt-4-turbo-preview"])
-    with st.expander("Parkinson's Disease Sources"):
-        st.markdown(references_used)
+
     
 
 # Get user input
 
-st.warning("""This app uses pre-processed content from the NLM Bookshelf. The purpose here is to illustrate grounding answers
-           in reliable sources through Retrieval Augmented Generation (RAG). Processed content is stored in vector database and used when crafting a response. Sources are listed on the left. 
-           The response will indicate if the reference material available fails to answer the question. """)
+st.warning("""This demo is designed to retrieve responses from pre-processed sources (shown on the left) using a Retrieval Augmented Generation (RAG) technique .  The app uses sources related to Parkinson’s disease and ACP guidelines for referrals to neurology.  Your questions should be related to these topics.   """)
 
 if st.secrets["use_docker"] == "True" or check_password2():
+    with st.sidebar:
+        model = st.selectbox("Select a model:", ["gpt-3.5-turbo", "gpt-4-turbo-preview"], index=0)
     topic = st.radio("Select a topic:", ["Parkinson's Disease", "ACP Suggested Content to Include in Referrals"], horizontal=True)
     if topic == "Parkinson's Disease":
         vectorstore_label = "parkinson_disease.faiss"
         question_placeholder = "What are the symptoms of Parkinson's disease?"
+        with st.sidebar:
+            with st.expander("Parkinson's Disease Sources"):
+                st.markdown(references_used)
     elif topic == "ACP Suggested Content to Include in Referrals":
-        st.sidebar.markdown("[ACP Referral Guidelines](https://www.acponline.org/clinical-information/high-value-care/resources-for-clinicians/high-value-care-coordination-hvcc-toolkit/pertinent-data-sets)")
+        # st.sidebar.markdown("[ACP Referral Guidelines](https://www.acponline.org/clinical-information/high-value-care/resources-for-clinicians/high-value-care-coordination-hvcc-toolkit/pertinent-data-sets)")
+        st.sidebar.info("""*Description:*  \n American College of Physicians High Value Care Coordination Project –  \n\n The AAN developed Pertinent Data Sets for information PCP’s should include or consider for most common reasons for neurology referrals.
+                        [ACP Referral Guidelines](https://www.acponline.org/clinical-information/high-value-care/resources-for-clinicians/high-value-care-coordination-hvcc-toolkit/pertinent-data-sets)
+""")
         vectorstore_label = "neuro_assess.faiss"
         question_placeholder = "What content should be included in a referral for headache?"
     st_callback = StreamlitCallbackHandler(st.container())
@@ -99,11 +102,11 @@ if st.secrets["use_docker"] == "True" or check_password2():
 
     query = st.text_input(f"Ask a question, e.g., {question_placeholder}",)
 
-    final_query = f'{rag_prompt} As a {user_role}, so please use appropriate terms, {query}.'
+    final_query = f'Updated System Prompt: {rag_prompt}, User role (use appropriate terminology to the user):{user_role}, question: {query}.'
 
     # If the user enters a query, get the answer
     if query:
         with st.spinner("Fomulating Answer..."):
-
+            st.info("GPT-3.5 is faster; GPT-4 is slower at the moment yet more accurate and comprehensive. Response time here will improve. Switch models on the left sidebar.")
             st.write(qa_chain(final_query)["result"])
             # st.write(answer["result"])

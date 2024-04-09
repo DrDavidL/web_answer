@@ -242,28 +242,29 @@ if st.secrets["use_docker"] == "True" or check_password():
         st.info(disclaimer)
          
         st.session_state.model_bias = st.selectbox("Model Options", ("openai/gpt-3.5-turbo", "openai/gpt-4", "anthropic/claude-3-sonnet:beta", "anthropic/claude-instant-v1", "google/palm-2-chat-bison", "meta-llama/codellama-34b-instruct", "meta-llama/llama-2-70b-chat", "gryphe/mythomax-L2-13b", "nousresearch/nous-hermes-llama2-13b"), index=0)
-        st.write("Last updated 3/20/24")
+        st.write("Last updated 4/09/24")
+        if st.session_state.model_bias == "google/palm-2-chat-bison":
+            st.warning("The Google model doesn't stream the output, but it's fast. (Will add Med-Palm2 when it's available.)")
+            st.markdown("[Information on Google's Palm 2 Model](https://ai.google/discover/palm2/)")
+        if st.session_state.model_bias == "openai/gpt-4":
+            st.warning("GPT-4 is much better at bias insertion and detection.")
+            st.markdown("[Information on OpenAI's GPT-4](https://platform.openai.com/docs/models/gpt-4)")
+        if st.session_state.model_bias == "anthropic/claude-instant-v1":
+            st.markdown("[Information on Anthropic's Claude-Instant](https://www.anthropic.com/index/releasing-claude-instant-1-2)")
+        if st.session_state.model_bias == "meta-llama/llama-2-70b-chat":
+            st.markdown("[Information on Meta's Llama2](https://ai.meta.com/llama/)")
+        if st.session_state.model_bias == "openai/gpt-3.5-turbo":
+            st.markdown("[Information on OpenAI's GPT-3.5](https://platform.openai.com/docs/models/gpt-3-5)")
+        if st.session_state.model_bias == "openai/gpt-3.5-turbo-1106":
+            st.markdown("[Information on OpenAI's GPT-3.5](https://platform.openai.com/docs/models/gpt-3-5)")
+        if st.session_state.model_bias == "gryphe/mythomax-L2-13b":
+            st.markdown("[Information on Gryphe's Mythomax](https://huggingface.co/Gryphe/MythoMax-L2-13b)")
+        if st.session_state.model_bias == "meta-llama/codellama-34b-instruct":
+            st.markdown("[Information on Meta's CodeLlama](https://huggingface.co/codellama/CodeLlama-34b-Instruct-hf)")
     with st.expander("Types of Biases (not a complete list)"):
         st.markdown(bias_types)
-   
-    if st.session_state.model_bias == "google/palm-2-chat-bison":
-        st.warning("The Google model doesn't stream the output, but it's fast. (Will add Med-Palm2 when it's available.)")
-        st.markdown("[Information on Google's Palm 2 Model](https://ai.google/discover/palm2/)")
-    if st.session_state.model_bias == "openai/gpt-4":
-        st.warning("GPT-4 is much better at bias insertion and detection.")
-        st.markdown("[Information on OpenAI's GPT-4](https://platform.openai.com/docs/models/gpt-4)")
-    if st.session_state.model_bias == "anthropic/claude-instant-v1":
-        st.markdown("[Information on Anthropic's Claude-Instant](https://www.anthropic.com/index/releasing-claude-instant-1-2)")
-    if st.session_state.model_bias == "meta-llama/llama-2-70b-chat":
-        st.markdown("[Information on Meta's Llama2](https://ai.meta.com/llama/)")
-    if st.session_state.model_bias == "openai/gpt-3.5-turbo":
-        st.markdown("[Information on OpenAI's GPT-3.5](https://platform.openai.com/docs/models/gpt-3-5)")
-    if st.session_state.model_bias == "openai/gpt-3.5-turbo-1106":
-        st.markdown("[Information on OpenAI's GPT-3.5](https://platform.openai.com/docs/models/gpt-3-5)")
-    if st.session_state.model_bias == "gryphe/mythomax-L2-13b":
-        st.markdown("[Information on Gryphe's Mythomax](https://huggingface.co/Gryphe/MythoMax-L2-13b)")
-    if st.session_state.model_bias == "meta-llama/codellama-34b-instruct":
-        st.markdown("[Information on Meta's CodeLlama](https://huggingface.co/codellama/CodeLlama-34b-Instruct-hf)")
+
+
  
     # st.info("Let AI help identify bias 😞 in notes." )
     # st.markdown('[Sample Oncology Notes](https://www.medicaltranscriptionsamplereports.com/hepatocellular-carcinoma-discharge-summary-sample/)')
@@ -274,7 +275,7 @@ if st.secrets["use_docker"] == "True" or check_password():
 
     if task == "Generate a sample note and check for bias":
         st.sidebar.warning("This is an EARLY PHASE TOOL undergoing significant updates soon. Eventually, it will generate biased yet (somewhat) realistic note examples for us all to learn from.")    
-        st.warning("Enter details into the sidebar on the left and use the buttons to generate response")
+        st.warning('This module can use the LLM to generate a sample clinical note.  In Step 1, start on the left, describe the type and content of note you would like to have generated; you can edit/modify the sample note any way you wish.  In Step 2, a button will appear to “Assess for Bias.”')
         desired_note_content = st.sidebar.text_input("Please enter a specialty and diagnoses for your generated progress note:", value="Neurology: Migraine")
         patient_attributes = st.sidebar.text_input("Please enter one or more patient attributes you would like to use for your note:", value="Patient is a 45 year old white female")
         desired_note_bias = st.sidebar.text_input("Please enter one or more biases you would like to insert within your sample note: ", value="Racial bias, Age bias, gender bias")
