@@ -489,10 +489,10 @@ with st.expander("Please read before using"):
     st.info("You may use default settings or modify them by selecting the models on the left sidebar that you would like to use to answer your question. The first two models will be used to generate answers, and the third model will be used to reconcile the two answers and any web search results.")
     st.warning("Please note this is a demo of late-breaking methods and there may be errors. Validate all answers independently before *thinking* of leveraging answers beyond just AI exploration.")
     st.write("Author: David Liebovitz, MD")
-st.warning("""Large language models (LLMs) hallucinate. This is particularly a concern in any healthcare context. Here, early methods
-           to mitigate this are used including [CoVE](https://arxiv.org/abs/2309.11495) and grounding the final output with web content from reliable sites.
-           The links provided to the user (independent of the LLMs) are also intended to assist with answering your question and may 
-           be used for the user to help validate the LLM content""")
+st.warning("""Large language models (LLMs) hallucinate.  This is particularly a concern in any healthcare context.  My AI Team illustrates early methods to mitigate this including Chain of Verification [(CoVE)](https://arxiv.org/abs/2309.11495) – asking the LLM to ”show their work,” asking the LLM to “improve your question” (which you can further edit with additional context), and grounding the final output with a check with reliable sources or websites (showing references used).   \n\n Sample trusted sources (separate from the LLM) are shown on the left and can help answer questions or validate responses. Multiple LLM models are available to test here as well.  
+""")
+
+
 
 if 'user_question' not in st.session_state:
     st.session_state['user_question'] = ''

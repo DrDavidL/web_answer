@@ -423,7 +423,8 @@ if st.secrets["use_docker"] == "True" or check_password():
     st.sidebar.markdown("### When finished testing - please complete the [post-survey](https://northwestern.az1.qualtrics.com/jfe/form/SV_09hfbEnz1uSW4rY) to help us improve this tool!")
     st.title("📝 Neurology Parser Assistant")
     st.warning("""Who likes extra EHR clicks? What if AI could recognize all concepts and file them where they belong in the chart? This tool illustrates
-               progress in that direction with a variety of methods. Soon, one or more will meet muster for research or clinical use!""")
+               progress in that direction with a variety of methods. Soon, one or more will meet muster for research or clinical use!  \n  \nWhen using this module to generate a sample clinical note, feel free to be as descriptive as you like in guiding the LLM in the note (different context – inpatient/outpatient, styles – trainee vs attending; and specific or vague detail in the history, data, or exam).
+""")
     disclaimer = """**Disclaimer:** This is a tool to assist chart abstraction for cancer related diagnoses. \n 
 2. This tool is not a real doctor. \n    
 3. You will not take any medical action based on the output of this tool. \n   
@@ -446,7 +447,7 @@ if st.secrets["use_docker"] == "True" or check_password():
     # st.info("📚 Let AI identify structured content from notes!" )
         
 
-    schema_choice = st.sidebar.radio("Pick your extraction schema:", ("Schema 1", "Schema 2", "Schema 3", "Method 2", "Method 3"))
+    schema_choice = st.sidebar.radio("Pick your extraction schema. The note will be scrutinized and parsed based on the selected schema.", ("Schema 1", "Schema 2", "Schema 3",  "Schema 4"))
     # st.markdown('[Sample Oncology Notes](https://www.medicaltranscriptionsamplereports.com/hepatocellular-carcinoma-discharge-summary-sample/)')
     parse_prompt  = """You will be provided with unstructured text about a patient, and your task is to find all information related to any cancer 
     and reformat for quick understanding by readers. If data is available, complete all fields shown below. Leave blank otherwise.  extract cancer diagnosis date, any recurrence dates, all treatments given and current plan. 
@@ -483,39 +484,52 @@ if st.secrets["use_docker"] == "True" or check_password():
     """
 
     # Set schemas for methods that require it.
+    with st.sidebar:
         
-    if schema_choice == "Complex Schema":
-        schema = default_schema
-        # st.sidebar.json(default_schema)    
-    elif schema_choice == "Schema 1":
-        schema = default_schema
-        # st.sidebar.json(schema1)
-    elif schema_choice == "Schema 2":
-        schema = schema2
-        # st.sidebar.json(schema2)
-    elif schema_choice == "Schema 3":
-        schema = schema3
-        # st.sidebar.json(schema3)
-    elif schema_choice == "Method 3":
-        output_choice = "JSON"
-    # # elif schema_choice == "Method 2":
-    #     response = openai.ChatCompletion.create(
-    #         model= selected_model,
-    #         messages=[],
-    #         temperature=0,
-    #         top_p=1,
-    #         frequency_penalty=0,
-    #         presence_penalty=0
-    #         )
-        
-
-    # def process_text(text, schema):
-    #     llm = ChatOpenAI(temperature=0, model=model, verbose = True)
+      if schema_choice == "Complex Schema":
+          schema = default_schema
+          # st.sidebar.json(default_schema)    
+      elif schema_choice == "Schema 1":
+                
+              # st.write("hi")
+          schema = default_schema
+          with st.expander('Schema 1'):
+              st.write(schema)
+          # st.sidebar.json(schema1)
+      elif schema_choice == "Schema 2":
+          schema = schema2
+          with st.expander('Schema 2'):
+              st.write(schema)
+          # st.sidebar.json(schema2)
+      elif schema_choice == "Schema 3":
+          schema = schema3
+          with st.expander('Schema 3'):
+              st.write(schema)
+          # st.sidebar.json(schema3)
+      elif schema_choice == "Schema 4":
+          output_choice = "JSON"
+          with st.expander('Schema 4'):
+              st.write("""    last_name: str = Field(..., description="Patient's last name")
+    first_name: str = Field(..., description="Patient's first name")
+    age: int = Field(..., description="Patient's age")
+    sex: str = Field(..., description="Patient's sex") 
+    diagnosis_type: str = Field(..., description="Type of neurological condition")
+    diagnosis_date: str = Field(..., description="Date of diagnosis")
+    neuro_tests: str = Field(..., description="Neurological tests conducted")
+    treatments: str = Field(..., description="Treatments for the neurological condition")
+    medication: bool = Field(..., description="Indicates if medication is prescribed")
+    medication_details: str = Field(..., description="Details of prescribed medication")
+    therapy: bool = Field(..., description="Indicates if therapy is prescribed")
+    therapy_details: str = Field(..., description="Details of therapy")
+    surgery: bool = Field(..., description="Indicates if surgery was performed")
+    surgery_details: str = Field(..., description="Details of surgery")
+    alcohol_use: str = Field(..., description="Alcohol use")
+    tobacco_history: str = Field(..., description="Tobacco history")""")
 
 
     
     if schema_choice != "Method 2":
-      if schema_choice != "Method 3":
+      if schema_choice != "Schema 4":
         llm = ChatOpenAI(temperature=0, model=model, verbose = True)
         chain = create_extraction_chain(schema, llm)
         
@@ -529,6 +543,7 @@ if st.secrets["use_docker"] == "True" or check_password():
       if st.button("Generate a sample note"):
         prelim_note = answer_using_prefix(prefix, sample_prompt, sample_response, sample_prompt, temperature = 0.4, history_context = "", )
         st.session_state.copied_note = prelim_note
+      if st.session_state.copied_note is not None:
         st.write(st.session_state.copied_note)
   
     elif test_or_use == "Paste content":
@@ -536,8 +551,8 @@ if st.secrets["use_docker"] == "True" or check_password():
       st.session_state.copied_note = prelim_note
         
     if st.sidebar.button("Extract"):
-        with st.expander("Click here to see the note you entered", expanded = True):
-            st.write(st.session_state.copied_note)
+        # with st.expander("Click here to see the note you entered", expanded = True):
+        #     st.write(st.session_state.copied_note)
 
         
         # if schema_choice != "Method 2":
@@ -546,7 +561,7 @@ if st.secrets["use_docker"] == "True" or check_password():
         #     with col2:
         #         st.markdown(extracted_data)
                 
-        if schema_choice == "Method 3":
+        if schema_choice == "Schema 4":
             openai_api_key = fetch_api_key()
             st.write(st.session_state.copied_note)
             extracted_data = method3(st.session_state.copied_note, model, output_choice)
