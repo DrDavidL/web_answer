@@ -32,6 +32,7 @@ openai.api_key = api_key
 client = OpenAI(api_key=api_key)
 
 st.set_page_config(page_title="Prior Authorization Help", page_icon="✔")
+st.sidebar.markdown("### When finished testing - please complete the [post-survey](https://northwestern.az1.qualtrics.com/jfe/form/SV_09hfbEnz1uSW4rY) to help us improve this tool!")
 def ChatGPT(messages):
     # Ensure messages is a list
     if not isinstance(messages, list):

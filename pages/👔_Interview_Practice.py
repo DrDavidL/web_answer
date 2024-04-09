@@ -23,6 +23,7 @@ from using_docker import using_docker
 
 
 st.set_page_config(page_title="Interview Practice!", page_icon="🧐")
+st.sidebar.markdown("### When finished testing - please complete the [post-survey](https://northwestern.az1.qualtrics.com/jfe/form/SV_09hfbEnz1uSW4rY) to help us improve this tool!")
 st.title("👔 Interview Practice")
 
 def talk_stream(model, voice, input):

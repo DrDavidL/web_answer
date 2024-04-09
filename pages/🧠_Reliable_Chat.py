@@ -12,6 +12,7 @@ from prompts import rag_prompt, references_used
 from langchain.callbacks.streamlit import StreamlitCallbackHandler
 
 st.set_page_config(page_title='Neurology Chats', layout = 'centered', page_icon = "💬", initial_sidebar_state = 'auto')    
+st.sidebar.markdown("### When finished testing - please complete the [post-survey](https://northwestern.az1.qualtrics.com/jfe/form/SV_09hfbEnz1uSW4rY) to help us improve this tool!")
 
 def check_password2():
     """Returns `True` if the user had the correct password."""

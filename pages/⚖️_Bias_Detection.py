@@ -228,6 +228,7 @@ if st.secrets["use_docker"] == "True" or check_password():
     # Define Streamlit app layout
 
     st.set_page_config(page_title='Bias Checker', layout = 'centered', page_icon = '⚖️', initial_sidebar_state = 'auto')
+    st.sidebar.markdown("### When finished testing - please complete the [post-survey](https://northwestern.az1.qualtrics.com/jfe/form/SV_09hfbEnz1uSW4rY) to help us improve this tool!")
     st.title("⚖️Bias Generator and Checker")
     st.warning("Large language models know 'language' yet may be biased based on their training context. Here, we instead use models to shed light on the biases that may exist in our notes.")
     disclaimer = """**Disclaimer:** This is a early draft tool to identify chart note biases. \n 

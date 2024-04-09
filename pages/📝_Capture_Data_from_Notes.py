@@ -420,6 +420,7 @@ if st.secrets["use_docker"] == "True" or check_password():
     # Define Streamlit app layout
 
     st.set_page_config(page_title='Neurology Parser Assistant', layout = 'centered', page_icon = ':stethoscope:', initial_sidebar_state = 'auto')
+    st.sidebar.markdown("### When finished testing - please complete the [post-survey](https://northwestern.az1.qualtrics.com/jfe/form/SV_09hfbEnz1uSW4rY) to help us improve this tool!")
     st.title("📝 Neurology Parser Assistant")
     st.warning("""Who likes extra EHR clicks? What if AI could recognize all concepts and file them where they belong in the chart? This tool illustrates
                progress in that direction with a variety of methods. Soon, one or more will meet muster for research or clinical use!""")

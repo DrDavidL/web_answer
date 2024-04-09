@@ -64,7 +64,7 @@ def check_password():
             st.text_input(
                 "Password", type="password", on_change=password_entered, key="password"
             )
-            st.write("*Please contact David Liebovitz, MD if you need an updated password for access.*")
+            st.write("*Visit the AAN Practice & Policy Hub Booth to obtain passcodes*")
             return False
         else:
             st.session_state["password_correct"] = True
@@ -83,9 +83,10 @@ def check_password():
    
 st.set_page_config(page_title='AAN feedback for AI Tools', layout = 'centered', page_icon = ':stethoscope:', initial_sidebar_state = 'auto')    
 
-st.write(check_pass_through())
+# st.write(check_pass_through())
 
-if check_pass_through() or check_password() or using_docker == True:
+# if check_pass_through() or check_password() or using_docker == True:
+if check_password() or using_docker == True:
 
     title1, title2 = st.columns([1, 3])
 
@@ -109,12 +110,14 @@ if check_pass_through() or check_password() or using_docker == True:
 
     # if st.secrets["use_docker"] == "True" or check_password():
     st.warning("""Thank you for trying out our various use cases! Large language models (LLMs) hallucinate. This is particularly a concern in any healthcare context. Here, early methods
-        to mitigate this are used including [CoVE](https://arxiv.org/abs/2309.11495) and grounding the final output with web content from reliable sites.
+        to mitigate this are used including chain of verification [CoVE](https://arxiv.org/abs/2309.11495) and grounding the final output with web content from reliable sites.
         Explore the links listed in the sidebar and copied below for easier phone use.""")
+    
+    
     col1, col2, col3 = st.columns(3)
 
     with col2:
-        st.page_link("pages/🧠_Parkinson_Chat.py", label= "Reliable Chat", icon = "🧠")
+        st.page_link("pages/🧠_Reliable_Chat.py", label= "Reliable Chat", icon = "🧠")
         # st.page_link("pages/🧐_Interview_Practice.py", label = "Interview Practice", icon = "🧐")
         st.page_link("pages/🗨️_Communication.py", label = "Communication", icon = "🗨️")
         st.page_link("pages/👔_Interview_Practice.py", label = "Interview Practice", icon = "👔")
@@ -122,3 +125,8 @@ if check_pass_through() or check_password() or using_docker == True:
         st.page_link("pages/⚖️_Bias_Detection.py", label = "Bias Detection", icon = "⚖️")
         st.page_link("pages/✔_Prior_Authorization_Help.py", label = "Prior Authorization Help", icon = "✔")
         st.page_link("pages/📝_Capture_Data_from_Notes.py", label = "Capture Data From Notes", icon = "📝")
+     
+    st.info("""If there are any problems, please check with the AAN Practice and Policy Hub or contact the PI’s at allan.wu@northwestern.edu or David.Liebovitz@northwestern.edu""")    
+    st.markdown("### When finished testing - please complete the [post-survey](https://northwestern.az1.qualtrics.com/jfe/form/SV_09hfbEnz1uSW4rY) to help us improve this tool!")
+    
+    st.sidebar.markdown("### When finished testing - please complete the [post-survey](https://northwestern.az1.qualtrics.com/jfe/form/SV_09hfbEnz1uSW4rY) to help us improve this tool!")

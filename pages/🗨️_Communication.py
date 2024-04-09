@@ -1066,6 +1066,7 @@ if "expanded" not in st.session_state:
     st.session_state["expanded"] = True
    
 st.set_page_config(page_title='🗨️Communication', layout = 'centered', page_icon = ':stethoscope:', initial_sidebar_state = 'auto')    
+st.sidebar.markdown("### When finished testing - please complete the [post-survey](https://northwestern.az1.qualtrics.com/jfe/form/SV_09hfbEnz1uSW4rY) to help us improve this tool!")
      
 st.title("🗨️Communication")
 st.warning("Please try the features on this tab and the Patient Ed tab, too! Note - you may switch to GPT4 on the left sidebar! GPT4 is more expensive - so play with GPT3.5 and then try GPT4. This is a work in progress and we are interested in your feedback and perceived value now and in the future.")

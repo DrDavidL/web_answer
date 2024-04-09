@@ -20,6 +20,7 @@ import markdown2
  
 
 st.set_page_config(page_title='My AI Team', layout = 'centered', page_icon = ':stethoscope:', initial_sidebar_state = 'auto')
+st.sidebar.markdown("### When finished testing - please complete the [post-survey](https://northwestern.az1.qualtrics.com/jfe/form/SV_09hfbEnz1uSW4rY) to help us improve this tool!")
 
 
 @st.cache_data
