@@ -31,7 +31,7 @@ def check_password2():
             st.text_input(
                 "Password", type="password", on_change=password_entered, key="password"
             )
-            st.write("*Please contact David Liebovitz, MD if you need an updated password for access.*")
+            st.write("*Visit the AAN Practice & Policy Hub Booth to obtain passcodes*")
             return False
         else:
             st.session_state["password_correct"] = True
