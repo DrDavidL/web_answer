@@ -128,7 +128,8 @@ if check_password() or st.secrets.use_docker == "True":
         st.page_link("pages/✔_Prior_Authorization_Help.py", label = "Prior Authorization Help", icon = "✔")
         st.page_link("pages/📝_Capture_Data_from_Notes.py", label = "Capture Data From Notes", icon = "📝")
      
-    st.info("""If there are any problems, please check with the AAN Practice and Policy Hub or contact the PI’s at allan.wu@northwestern.edu or David.Liebovitz@northwestern.edu""")    
+    
     st.markdown("### When finished testing - please complete the [post-survey](https://northwestern.az1.qualtrics.com/jfe/form/SV_09hfbEnz1uSW4rY) to help us improve this tool!")
     
     st.sidebar.markdown("### When finished testing - please complete the [post-survey](https://northwestern.az1.qualtrics.com/jfe/form/SV_09hfbEnz1uSW4rY) to help us improve this tool!")
+    st.info("""If there are any problems, please check with the AAN Practice and Policy Hub or contact the PI’s at allan.wu@northwestern.edu or David.Liebovitz@northwestern.edu""")    
