@@ -86,34 +86,36 @@ st.set_page_config(page_title='AAN feedback for AI Tools', layout = 'centered', 
 # st.write(check_pass_through())
 
 # if check_pass_through() or check_password() or using_docker == True:
-if check_password() or using_docker == True:
 
-    title1, title2 = st.columns([1, 3])
+title1, title2 = st.columns([1, 3])
 
-    with title1:
+with title1:
 
-        colorful_brain= Image.open('static/colorful_brain.png')
-        # medimate_robot = Image.open('static/medimate_robot.png')
-        st.image(colorful_brain, use_column_width=True)
+    colorful_brain= Image.open('static/colorful_brain.png')
+    # medimate_robot = Image.open('static/medimate_robot.png')
+    st.image(colorful_brain, use_column_width=True)
+    
+with title2:
         
-    with title2:
-            
-        st.title("AAN Feedback on Tools for Neurology")
+    st.title("AAN Feedback on Tools for Neurology")
 
-        with st.expander('About MediMate - Important Disclaimer'):
-            st.write("Author: David Liebovitz, MD, Northwestern University")
-            st.info(disclaimer)
-            st.session_state.temp = st.slider("Select temperature (Higher values more creative but tangential and more error prone)", 0.0, 1.0, 0.3, 0.01)
-            st.write("Last updated 3/17/24")
-            st.write("ALPHA version 1.0")
-        # st.info("With OpenAI announcement 11-6-2023, new model added: GPT-4-1106-preview. It's in beta and allows longer text inputs than GPT-4.")
+    with st.expander('About MediMate - Important Disclaimer'):
+        st.write("Author: David Liebovitz, MD, Northwestern University")
+        st.info(disclaimer)
+        st.session_state.temp = st.slider("Select temperature (Higher values more creative but tangential and more error prone)", 0.0, 1.0, 0.3, 0.01)
+        st.write("Last updated 3/17/24")
+        st.write("ALPHA version 1.0")
+    # st.info("With OpenAI announcement 11-6-2023, new model added: GPT-4-1106-preview. It's in beta and allows longer text inputs than GPT-4.")
 
-    # if st.secrets["use_docker"] == "True" or check_password():
-    st.warning("""Thank you for trying out our various use cases! Large language models (LLMs) hallucinate. This is particularly a concern in any healthcare context. Here, early methods
-        to mitigate this are used including chain of verification [CoVE](https://arxiv.org/abs/2309.11495) and grounding the final output with web content from reliable sites.
-        Explore the links listed in the sidebar and copied below for easier phone use.""")
+# if st.secrets["use_docker"] == "True" or check_password():
+st.warning("""Thank you for trying out our various use cases! Large language models (LLMs) hallucinate. This is particularly a concern in any healthcare context. Here, early methods
+    to mitigate this are used including chain of verification [CoVE](https://arxiv.org/abs/2309.11495) and grounding the final output with web content from reliable sites.
+    Explore the links listed in the sidebar and copied below for easier phone use.""")
+
     
-    
+if check_password() or st.secrets.use_docker == "True":
+
+
     col1, col2, col3 = st.columns(3)
 
     with col2:
