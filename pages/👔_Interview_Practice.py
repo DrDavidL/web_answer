@@ -202,8 +202,9 @@ if "audio_input" not in st.session_state:
 if "last_response_interview" not in st.session_state:
     st.session_state["last_response_interview"] = "Hi, I'm Dr. Smith! Nice to meet you!"
 
+st.warning("""Imagine you are interviewing for a job.  This may be clinical or business within your field.  This app supports audio interaction – speech generation and spoken responses (your device/browser should be unmuted and allow microphone access) or you may toggle off the audio generation portion and type responses instead.  Try being fairly descriptive about your scenario – what your background & goals are and what kind of environment you are anticipating to join.  This tool uses OpenAI’s GPT3.5 turbo model. Development is underway for clinical scenarios.""")
+
 if check_password2() or st.secrets["use_docker"] == "True":
-    st.warning("""Imagine you are interviewing for a job.  This may be clinical or business within your field.  This app supports audio interaction – speech generation and spoken responses (your device/browser should be unmuted and allow microphone access) or you may toggle off the audio generation portion and type responses instead.  Try being fairly descriptive about your scenario – what your background & goals are and what kind of environment you are anticipating to join.  This tool uses OpenAI’s GPT3.5 turbo model. Development is underway for clinical scenarios.""")
     system_context = st.radio("Select an interviewer type :", ("Tough", "Nice",), horizontal = True, index=0)
     specialty = st.text_input("Enter your sought specialty area", placeholder="e.g. Stroke Neurology")
     position = st.text_input("Enter your sought position", placeholder="e.g. resident, faculty, administrator")
