@@ -276,8 +276,7 @@ if check_password2() or st.secrets["use_docker"] == "True":
             
     else:
         with st.sidebar:
-            st.info("""Click the person-icon, pause 3 seconds and begin to speak with natural speech.  After you pause, the LLM will start its response. The first time you may be prompted to
-            allow microphone access; you may also need to unumute the web browser page.""")
+            st.info("""Click the green person-icon, pause 3 seconds, and begin to speak with natural speech.  \n\nAs soon as you pause, the LLM will start its response.""")
             audio_bytes = audio_recorder(
             text="Click, pause, speak:",
             recording_color="#e8b62c",
