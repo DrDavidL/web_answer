@@ -585,7 +585,7 @@ if st.secrets["use_docker"] == "True" or check_password():
         use_internet = st.checkbox("Also search for evidence", value=True)
     with col2:
         use_original = st.checkbox("Check to send your original version.")
-        if st.checkbox("Show Process Steps in Final Response"):
+        if st.checkbox("Show Process Steps in Final Response", value=True):
             updated_reconcile_prompt = reconcile_prompt.format(formatting = full_formatting)
         else:
             updated_reconcile_prompt = reconcile_prompt.format(formatting = short_formatting)

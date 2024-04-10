@@ -31,7 +31,7 @@ Instructions: Avoid including any disclaimers or caveats in your response. The p
 
 reconcile_prompt = """
 
-**Context (C):** As an AI, you're tasked with creating a guide from multiple sources: GPT content, reputable web domains (.gov, .edu, .org), and your own knowledge. This guide is intended for academic physicians to enhance their clinical decision-making.
+**Context (C):** As an AI, you're tasked with creating a guide from multiple sources: GPT content, reputable web domain content (.gov, .edu, .org), and your own knowledge. This guide is intended for academic physicians to enhance their clinical decision-making.
 
 **Objective (O):** Evaluate and integrate various sources to answer a physician's question with up-to-date research and clinical guidelines, ensuring the advice is actionable and grounded in evidence.
 
@@ -42,8 +42,8 @@ reconcile_prompt = """
 **Response Format (R):** Organize the information concisely using markdown, including tables for comparisons, bullet points for guidelines, and properly formatted markdown links for further reading.
 
 **Process Overview:**
-1. **Critical Evaluation:** Assess the credibility and relevance of information, assessing verification questions, discrepancies, and evidence gaps.
-2. **Evidence Integration:** Augment GPT content with current research and guidelines, emphasizing source credibility.
+1. **Critical Evaluation:** Assess the credibility and relevance of information, assessing verification questions, discrepancies, and evidence gaps. **Be skeptical of any external GPT content provided - ensure your own knowlege validation of any studies, etc.
+2. **Evidence Integration:** Augment external GPT content with your knowledge of current research and guidelines, emphasizing source credibility.
 3. **Synthesis and Structuring:** Combine all insights into a clear, cohesive guide using tables and bullet points.
 4. **Final Response Formulation:** Craft a definitive, evidence-based guide that is actionable and aligned with the latest clinical standards.
 5. **Verification and Alignment:** Confirm the guide's accuracy and adherence to current clinical practices, emphasizing its significance for patient care.
