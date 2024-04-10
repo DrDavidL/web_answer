@@ -107,11 +107,11 @@ if check_password2() or st.secrets["use_docker"] == "True":
     today = date.today()
 
     st.title('Patient Details')
-    patient_name = st.text_input("Enter patient's name", value="Jane Smith")
-    patient_dob = st.text_input("Enter patient's date of birth", value="01/01/1950")
+    patient_name = st.text_input("Enter patient's name (use a made-up name - no real PHI!)", value="Jane Smith")
+    patient_dob = st.text_input("Enter patient's date of birth (use a made-up date)", value="01/01/1950")
     med_pa = st.text_input("Enter medication or procedure you are trying to get a prior authorization for", value="lecanemab")
     diagnosis = st.text_input("Enter patient's diagnosis", value="Alzheimer's disease")
-    extra_info = st.text_area("Enter any additional information you would like included in the letter here (optional)", value = "Patient has beend diagnosed with Alzheimer's disease, has no history of stroke/TIA or evidence of other forms of dementia, and has a PET showing prescence of beta-amyloid plaques")
+    extra_info = st.text_area("Enter any additional information you would like included in the letter here (optional)", value = "Patient has been diagnosed with Alzheimer's disease, has no history of stroke/TIA or evidence of other forms of dementia, and has a PET showing prescence of beta-amyloid plaques")
     if st.button("Compose Initial Prior Authorization"):
         template_medication = f"""
 
