@@ -1,10 +1,10 @@
 # app/Dockerfile
 
 # Use Python 3.9 slim image as the base image
-FROM python:3.9-slim
+FROM python:3.11-slim
 
 # Set the working directory to /my_team within the container
-WORKDIR /web_answer
+WORKDIR /neuro-medimate
 
 # Install curl for the health check
 RUN apt-get update && apt-get install -y curl && rm -rf /var/lib/apt/lists/*
@@ -25,7 +25,10 @@ COPY using_docker.py ./
 COPY pages/ ./pages/
 COPY images/ ./images/
 COPY .streamlit/ ./.streamlit/
-COPY .static/ ./.static/
+COPY static/ ./static/
+COPY neuro_assess.faiss/ ./neuro_assess.faiss/
+COPY parkinson_disease.faiss/ ./parkinson_disease.faiss/
+COPY out/ ./out/
 
 # Expose port 8501 for Streamlit
 EXPOSE 8501
