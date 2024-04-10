@@ -402,7 +402,16 @@ schema3 = {
     },
     "required": ["patient_last_name", "patient_first_name"],
 }
-
+st.set_page_config(page_title='Neurology Parser Assistant', layout = 'centered', page_icon = ':stethoscope:', initial_sidebar_state = 'auto')
+st.sidebar.markdown("### When finished testing - please complete the [post-survey](https://northwestern.az1.qualtrics.com/jfe/form/SV_09hfbEnz1uSW4rY) to help us improve this tool!")
+st.title("📝 Neurology Parser Assistant")
+st.warning("""Who likes extra EHR clicks? What if AI could recognize all concepts and file them where they belong in the chart? This tool illustrates
+            progress in that direction with a variety of methods. Soon, one or more will meet muster for research or clinical use!  \n  \nWhen using this module to generate a sample clinical note, feel free to be as descriptive as you like in guiding the LLM in the note (different context – inpatient/outpatient, styles – trainee vs attending; and specific or vague detail in the history, data, or exam).
+""")
+disclaimer = """**Disclaimer:** This is a tool to assist chart abstraction for cancer related diagnoses. \n 
+2. This tool is not a real doctor. \n    
+3. You will not take any medical action based on the output of this tool. \n   
+"""
 
 if st.secrets["use_docker"] == "True" or check_password():
 
@@ -419,16 +428,7 @@ if st.secrets["use_docker"] == "True" or check_password():
     # API_O = st.secrets["OPENAI_API_KEY"]
     # Define Streamlit app layout
 
-    st.set_page_config(page_title='Neurology Parser Assistant', layout = 'centered', page_icon = ':stethoscope:', initial_sidebar_state = 'auto')
-    st.sidebar.markdown("### When finished testing - please complete the [post-survey](https://northwestern.az1.qualtrics.com/jfe/form/SV_09hfbEnz1uSW4rY) to help us improve this tool!")
-    st.title("📝 Neurology Parser Assistant")
-    st.warning("""Who likes extra EHR clicks? What if AI could recognize all concepts and file them where they belong in the chart? This tool illustrates
-               progress in that direction with a variety of methods. Soon, one or more will meet muster for research or clinical use!  \n  \nWhen using this module to generate a sample clinical note, feel free to be as descriptive as you like in guiding the LLM in the note (different context – inpatient/outpatient, styles – trainee vs attending; and specific or vague detail in the history, data, or exam).
-""")
-    disclaimer = """**Disclaimer:** This is a tool to assist chart abstraction for cancer related diagnoses. \n 
-2. This tool is not a real doctor. \n    
-3. You will not take any medical action based on the output of this tool. \n   
-    """
+
     openai_api_key = fetch_api_key()
     openai.api_key = openai_api_key
     with st.expander('About Neurology Parser - Important Disclaimer'):

@@ -198,6 +198,14 @@ def check_password():
 
 
 
+st.set_page_config(page_title='Bias Checker', layout = 'centered', page_icon = '⚖️', initial_sidebar_state = 'auto')
+st.sidebar.markdown("### When finished testing - please complete the [post-survey](https://northwestern.az1.qualtrics.com/jfe/form/SV_09hfbEnz1uSW4rY) to help us improve this tool!")
+st.title("⚖️Bias Generator and Checker")
+st.warning("Large language models know 'language' yet may be biased based on their training context. Here, we instead use models to shed light on the biases that may exist in our notes.")
+disclaimer = """**Disclaimer:** This is a early draft tool to identify chart note biases. \n 
+2. This tool is not a real doctor. \n    
+3. You will not take any medical action based on the output of this tool. \n   
+"""
 
 if st.secrets["use_docker"] == "True" or check_password():
     
@@ -227,14 +235,6 @@ if st.secrets["use_docker"] == "True" or check_password():
     # API_O = st.secrets["OPENAI_API_KEY"]
     # Define Streamlit app layout
 
-    st.set_page_config(page_title='Bias Checker', layout = 'centered', page_icon = '⚖️', initial_sidebar_state = 'auto')
-    st.sidebar.markdown("### When finished testing - please complete the [post-survey](https://northwestern.az1.qualtrics.com/jfe/form/SV_09hfbEnz1uSW4rY) to help us improve this tool!")
-    st.title("⚖️Bias Generator and Checker")
-    st.warning("Large language models know 'language' yet may be biased based on their training context. Here, we instead use models to shed light on the biases that may exist in our notes.")
-    disclaimer = """**Disclaimer:** This is a early draft tool to identify chart note biases. \n 
-2. This tool is not a real doctor. \n    
-3. You will not take any medical action based on the output of this tool. \n   
-    """
     openai_api_key = st.secrets["OPENAI_API_KEY"]
     openai.api_key = openai_api_key
     with st.expander('About Bias Checker - Important Disclaimer'):
