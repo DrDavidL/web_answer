@@ -21,6 +21,7 @@ COPY using_docker.py ./
 COPY ai_team_prompts.py ./
 COPY extract_prompts.py ./
 COPY pdf_prompts.py ./
+COPY markdown2.py ./
 
 
 # If there are other files or directories to include, add them here
