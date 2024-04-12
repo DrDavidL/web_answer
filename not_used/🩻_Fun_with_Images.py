@@ -32,7 +32,7 @@ def get_image_download_link(img_path: str):
 # Check if the user has entered the correct password
 def check_password():
     def password_entered():
-        st.session_state["password_correct"] = st.session_state["password"] == st.secrets["password"]
+        st.session_state["password_correct"] = st.session_state["password"] == st.secrets["password"] or st.session_state["password2"] == st.secrets["password2"]
 
     if "password_correct" not in st.session_state:
         if not using_docker:
