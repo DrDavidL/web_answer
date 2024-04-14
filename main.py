@@ -66,7 +66,7 @@ def check_password():
         return True
 
    
-st.set_page_config(page_title='NCCN feedback for AI Tools', layout = 'centered', page_icon = ':stethoscope:', initial_sidebar_state = 'auto')    
+st.set_page_config(page_title='AI Tools', layout = 'centered', page_icon = ':stethoscope:', initial_sidebar_state = 'auto')    
 title1, title2 = st.columns([1, 3])
 
 with title1:
@@ -77,7 +77,7 @@ with title1:
     
 with title2:
         
-    st.title("NCCN Feedback on Tools for Oncology")
+    st.title("7th Illinois AI and Health Summit - AI Tools Examples for Health")
 
     with st.expander('About MediMate - Important Disclaimer'):
         st.write("Author: David Liebovitz, MD, Northwestern University")
