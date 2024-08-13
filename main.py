@@ -103,7 +103,8 @@ def answer_using_prefix_openai(prefix, sample_question, sample_answer, my_ask, t
         user_content=my_ask,
         )
     # st.write(messages)
-    model = process_model_name(st.session_state.model)
+    # model = process_model_name(st.session_state.model)
+    model = "gpt-4o"
     # st.write('here is the model: ' + model)
     api_key = st.secrets["OPENAI_API_KEY"]
     client = OpenAI(
