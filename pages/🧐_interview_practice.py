@@ -200,7 +200,7 @@ if "last_response_interview" not in st.session_state:
     st.session_state["last_response_interview"] = "Hi, I'm Dr. Smith! Nice to meet you!"
 
 if check_password2():
-    st.info("Have fun. Enter responses at the bottom of the page or choose the Microphone option. This tool uses openai's GPT3.5 turbo 16k model.")
+    st.info("Have fun. Enter responses at the bottom of the page or choose the Microphone option. This tool uses openai's gpt-4o-2024-08-06 model.")
     system_context = st.radio("Select an interviewer type :", ("Tough", "Nice",), horizontal = True, index=0)
     specialty = st.text_input("Enter your specialty", placeholder="e.g. Emergency Medicine")
     position = st.text_input("Enter your position", placeholder="e.g. resident")
