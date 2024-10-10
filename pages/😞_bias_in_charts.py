@@ -115,13 +115,15 @@ def answer_using_prefix_old(prefix, sample_question, sample_answer, my_ask, temp
         model = "gpt-3.5-turbo-1106"
     if model == "openai/gpt-4":
         model = "gpt-4-1106-preview"
+    if model == "openai/gpt-4o":
+        model == "gpt-4o"
     if history_context == None:
         history_context = ""
     messages = [{'role': 'system', 'content': prefix},
             {'role': 'user', 'content': sample_question},
             {'role': 'assistant', 'content': sample_answer},
             {'role': 'user', 'content': history_context + my_ask},]
-    if model == "gpt-4-1106-preview" or model == "gpt-3.5-turbo" or model == "gpt-3.5-turbo-1106":
+    if model == "gpt-4-1106-preview" or model == "gpt-3.5-turbo" or model == "gpt-3.5-turbo-1106" or model == "gpt-4o":
         openai.api_base = "https://api.openai.com/v1/"
         openai.api_key = st.secrets['OPENAI_API_KEY']
         completion = openai.ChatCompletion.create( # Change the function Completion to ChatCompletion
@@ -244,7 +246,7 @@ if check_password():
     with st.expander("Types of Biases (not a complete list)"):
         st.markdown(bias_types)
     
-    st.session_state.model_bias = st.selectbox("Model Options", ("openai/gpt-3.5-turbo", "openai/gpt-3.5-turbo-1106", "openai/gpt-4", "anthropic/claude-instant-v1", "google/palm-2-chat-bison", "meta-llama/codellama-34b-instruct", "meta-llama/llama-2-70b-chat", "gryphe/mythomax-L2-13b", "nousresearch/nous-hermes-llama2-13b"), index=2)
+    st.session_state.model_bias = st.selectbox("Model Options", ("openai/gpt-3.5-turbo", "openai/gpt-3.5-turbo-1106", "openai/gpt-4", "openai/gpt-4o", "anthropic/claude-instant-v1", "google/palm-2-chat-bison", "meta-llama/codellama-34b-instruct", "meta-llama/llama-2-70b-chat", "gryphe/mythomax-L2-13b", "nousresearch/nous-hermes-llama2-13b"), index=3)
     if st.session_state.model_bias == "google/palm-2-chat-bison":
         st.warning("The Google model doesn't stream the output, but it's fast. (Will add Med-Palm2 when it's available.)")
         st.markdown("[Information on Google's Palm 2 Model](https://ai.google/discover/palm2/)")
